@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1FEEDFE0257AF2FA003E01A7"
-               BuildableName = "AdventOfCode2020.framework"
-               BlueprintName = "AdventOfCode2020"
+               BlueprintIdentifier = "1FD05171257AD01500E53EEA"
+               BuildableName = "AdventOfCode2020Runner"
+               BlueprintName = "AdventOfCode2020Runner"
                ReferencedContainer = "container:AdventOfCode2020.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -62,6 +62,23 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "1FD05171257AD01500E53EEA"
+            BuildableName = "AdventOfCode2020Runner"
+            BlueprintName = "AdventOfCode2020Runner"
+            ReferencedContainer = "container:AdventOfCode2020.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "DEBUG_LOG"
+            value = ""
+            isEnabled = "NO">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -69,15 +86,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1FEEDFE0257AF2FA003E01A7"
-            BuildableName = "AdventOfCode2020.framework"
-            BlueprintName = "AdventOfCode2020"
+            BlueprintIdentifier = "1FD05171257AD01500E53EEA"
+            BuildableName = "AdventOfCode2020Runner"
+            BlueprintName = "AdventOfCode2020Runner"
             ReferencedContainer = "container:AdventOfCode2020.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
