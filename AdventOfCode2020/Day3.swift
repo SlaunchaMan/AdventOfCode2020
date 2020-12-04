@@ -22,7 +22,9 @@ fileprivate let exampleInput =
     .#..#...#.#
     """
 
-enum Day3 {
+public enum Day3: FullPuzzle {
+    
+    public static let day: Int = 3
     
     static func treeCollisions(
         using input: [String],
@@ -43,15 +45,15 @@ enum Day3 {
         return collisions
     }
     
-    static func example1() {
-        print(treeCollisions(using: parseInputLines(exampleInput)))
+    public static func example1() -> String {
+        return "\(treeCollisions(using: parseInputLines(exampleInput)))"
     }
     
-    static func part1() {
-        print(treeCollisions(using: parseInputLines(inputForDay(3))))
+    public static func part1() -> String {
+        return "\(treeCollisions(using: parseInputLines(puzzleInput())))"
     }
     
-    static func example2() {
+    public static func example2() -> String {
         let collisions =
             [treeCollisions(using: parseInputLines(exampleInput), slope: (1,1)),
              treeCollisions(using: parseInputLines(exampleInput), slope: (3,1)),
@@ -59,11 +61,11 @@ enum Day3 {
              treeCollisions(using: parseInputLines(exampleInput), slope: (7,1)),
              treeCollisions(using: parseInputLines(exampleInput), slope: (1,2))]
         
-        print("\(collisions.map(String.init).joined(separator: ", ")): \(collisions.reduce(1, *))")
+        return "\(collisions.reduce(1, *))"
     }
     
-    static func part2() {
-        let input = inputForDay(3)
+    public static func part2() -> String {
+        let input = puzzleInput()
         let collisions =
             [treeCollisions(using: parseInputLines(input), slope: (1,1)),
              treeCollisions(using: parseInputLines(input), slope: (3,1)),
@@ -71,7 +73,7 @@ enum Day3 {
              treeCollisions(using: parseInputLines(input), slope: (7,1)),
              treeCollisions(using: parseInputLines(input), slope: (1,2))]
         
-        print(collisions.reduce(1, *))
+        return "\(collisions.reduce(1, *))"
     }
     
 }

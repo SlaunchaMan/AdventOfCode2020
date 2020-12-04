@@ -22,7 +22,9 @@ extension String {
     
 }
 
-enum Day2 {
+public enum Day2: FullPuzzle {
+    
+    public static let day: Int = 2
     
     struct Requirement: CustomStringConvertible {
         let firstNumber: Int
@@ -73,34 +75,34 @@ enum Day2 {
                 string)
     }
     
-    static func example1() {
+    public static func example1() -> String {
         let input = parseInputLines(exampleInput, using: parseInputLine)
         
         for (requirement, password) in input {
-            print("\(requirement): \(password): \(requirement.evaluatePart1(password) ? "valid": "invalid")")
+            log("\(requirement): \(password): \(requirement.evaluatePart1(password) ? "valid": "invalid")")
         }
         
-        print(input.filter { $0.0.evaluatePart1($0.1) }.count)
+        return "\(input.filter { $0.0.evaluatePart1($0.1) }.count)"
     }
     
-    static func part1() {
-        let input = parseInputLines(inputForDay(2), using: parseInputLine)
-        print(input.filter { $0.0.evaluatePart1($0.1) }.count)
+    public static func part1() -> String {
+        let input = parseInputLines(puzzleInput(), using: parseInputLine)
+        return "\(input.filter { $0.0.evaluatePart1($0.1) }.count)"
     }
     
-    static func example2() {
+    public static func example2() -> String {
         let input = parseInputLines(exampleInput, using: parseInputLine)
         
         for (requirement, password) in input {
-            print("\(requirement): \(password): \(requirement.evaluatePart2(password) ? "valid": "invalid")")
+            log("\(requirement): \(password): \(requirement.evaluatePart2(password) ? "valid": "invalid")")
         }
         
-        print(input.filter { $0.0.evaluatePart2($0.1) }.count)
+        return "\(input.filter { $0.0.evaluatePart2($0.1) }.count)"
     }
     
-    static func part2() {
-        let input = parseInputLines(inputForDay(2), using: parseInputLine)
-        print(input.filter { $0.0.evaluatePart2($0.1) }.count)
+    public static func part2() -> String {
+        let input = parseInputLines(puzzleInput(), using: parseInputLine)
+        return "\(input.filter { $0.0.evaluatePart2($0.1) }.count)"
     }
     
 }

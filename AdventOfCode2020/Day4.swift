@@ -63,7 +63,7 @@ extension Dictionary where Key: StringProtocol, Value: StringProtocol {
         guard let value = self[key] else { return nil }
         
         guard value.count == 4 else {
-            print("unexpected int length: \(value)")
+            Day4.log("unexpected int length: \(value)")
             return nil
         }
         
@@ -72,7 +72,9 @@ extension Dictionary where Key: StringProtocol, Value: StringProtocol {
     
 }
 
-enum Day4 {
+public enum Day4: PuzzleWithExample1 {
+    
+    public static let day: Int = 4
     
     static func parsePassportLogEntry(
         _ passportLogEntry: String
@@ -93,32 +95,32 @@ enum Day4 {
     
     static func passportIsValidPart2(_ passport: [String: String]) -> Bool {
         guard let byr = passport[intKey: "byr"] else {
-            print("missing byr")
+            log("missing byr")
             return false
         }
         
         guard (1920...2002).contains(byr) else {
-            print("bad byr: \(byr)")
+            log("bad byr: \(byr)")
             return false
         }
             
         guard let iyr = passport[intKey: "iyr"] else {
-            print("missing iyr")
+            log("missing iyr")
             return false
         }
             
         guard (2010...2020).contains(iyr) else {
-            print("bad iyr: \(iyr)")
+            log("bad iyr: \(iyr)")
             return false
         }
             
         guard let eyr = passport[intKey: "eyr"] else {
-            print("missing eyr")
+            log("missing eyr")
             return false
         }
             
         guard (2020...2030).contains(eyr) else {
-            print("bad eyr: \(eyr)")
+            log("bad eyr: \(eyr)")
             return false
         }
         
@@ -127,15 +129,15 @@ enum Day4 {
         else { return false }
         
         if hgt.hasSuffix("in"), !(59...76).contains(hgtValue) {
-            print("bad height (in): \(hgt)")
+            log("bad height (in): \(hgt)")
             return false
         }
         else if hgt.hasSuffix("cm"), !(150...193).contains(hgtValue) {
-            print("bad height (cm): \(hgt)")
+            log("bad height (cm): \(hgt)")
             return false
         }
         else if !(hgt.hasSuffix("in") || hgt.hasSuffix("cm")) {
-            print("bad height: \(hgt)")
+            log("bad height: \(hgt)")
             return false
         }
         
@@ -151,59 +153,59 @@ enum Day4 {
         }
         
         guard let ecl = passport["ecl"] else {
-            print("missing ecl")
+            log("missing ecl")
             return false
         }
         
         guard ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(ecl) else {
-            print("bad ecl: \(ecl)")
+            log("bad ecl: \(ecl)")
             return false
         }
         
         guard let pid = passport["pid"],
               pid.count == 9
         else {
-            print("bad pid")
+            log("bad pid")
             return false
         }
         
         if pid.contains(where: { !$0.isNumber }) {
-            print("bad pid: \(pid)")
+            log("bad pid: \(pid)")
             return false
         }
         
         return true
     }
     
-    static func example1() {
+    public static func example1() -> String {
         let input = parseInput(example1Input, separatedBy: "\n\n")
         let passports = input.map(parsePassportLogEntry)
         
-        print(passports.filter { passportIsValidPart1($0) }.count)
+        return "\(passports.filter { passportIsValidPart1($0) }.count)"
     }
     
-    static func part1() {
-        let input = parseInput(inputForDay(4), separatedBy: "\n\n")
+    public static func part1() -> String {
+        let input = parseInput(puzzleInput(), separatedBy: "\n\n")
         let passports = input.map(parsePassportLogEntry)
         
-        print(passports.filter { passportIsValidPart1($0) }.count)
+        return "\(passports.filter { passportIsValidPart1($0) }.count)"
     }
     
-    static func example2() {
+    public static func example2() {
         let invalid = parseInput(example2InvalidInput, separatedBy: "\n\n")
         let invalidPassports = invalid.map(parsePassportLogEntry)
-        print(invalidPassports.filter { passportIsValidPart2($0) }.count)
+        log(invalidPassports.filter { passportIsValidPart2($0) }.count)
         
         let valid = parseInput(example2ValidInput, separatedBy: "\n\n")
         let validPassports = valid.map(parsePassportLogEntry)
-        print(validPassports.filter { !passportIsValidPart2($0) }.count)
+        log(validPassports.filter { !passportIsValidPart2($0) }.count)
     }
     
-    static func part2() {
-        let input = parseInput(inputForDay(4), separatedBy: "\n\n")
+    public static func part2() -> String {
+        let input = parseInput(puzzleInput(), separatedBy: "\n\n")
         let passports = input.map(parsePassportLogEntry)
         
-        print(passports.filter { passportIsValidPart2($0) }.count)
+        return "\(passports.filter { passportIsValidPart2($0) }.count)"
     }
     
 }

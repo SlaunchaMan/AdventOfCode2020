@@ -18,7 +18,9 @@ fileprivate let exampleInput =
     """
 
 
-enum Day1 {
+public enum Day1: FullPuzzle {
+    
+    public static let day: Int = 1
     
     private static func countEntries(_ count: Int,
                                      in array: [Int],
@@ -41,42 +43,42 @@ enum Day1 {
         return nil
     }
     
-    static func example1() {
+    public static func example1() -> String {
         let input = parseInputLines(exampleInput, using: Int.init)  
         guard let entries = countEntries(2, in: input, summingTo: 2020) else {
             fatalError()
         }
         
-        print(entries.reduce(1, *))
+        return "\(entries.reduce(1, *))"
     }
     
-    static func part1() {
-        let part1Input = parseInputLines(inputForDay(1), using: Int.init)
+    public static func part1() -> String {
+        let part1Input = parseInputLines(puzzleInput(), using: Int.init)
         
         guard let entries = countEntries(2, in: part1Input, summingTo: 2020) else {
             fatalError()
         }
         
-        print(entries.reduce(1, *))
+        return "\(entries.reduce(1, *))"
     }
     
-    static func example2() {
+    public static func example2() -> String {
         let input = parseInputLines(exampleInput, using: Int.init)  
         guard let entries = countEntries(3, in: input, summingTo: 2020) else {
             fatalError()
         }
         
-        print(entries.reduce(1, *))
+        return "\(entries.reduce(1, *))"
     }
     
-    static func part2() {
-        let part2Input = parseInputLines(inputForDay(1), using: Int.init)
+    public static func part2() -> String {
+        let part2Input = parseInputLines(puzzleInput(), using: Int.init)
         
         guard let entries = countEntries(3, in: part2Input, summingTo: 2020) else {
             fatalError()
         }
         
-        print(entries.reduce(1, *))
+        return "\(entries.reduce(1, *))"
     }
     
 }
