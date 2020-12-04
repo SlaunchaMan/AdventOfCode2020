@@ -10,7 +10,6 @@
 		1FD05176257AD01500E53EEA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD05175257AD01500E53EEA /* main.swift */; };
 		1FEEDFEA257AF2FB003E01A7 /* AdventOfCode2020.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEEDFE1257AF2FA003E01A7 /* AdventOfCode2020.framework */; };
 		1FEEDFEF257AF2FB003E01A7 /* AdventOfCode2020Day1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEEDFEE257AF2FB003E01A7 /* AdventOfCode2020Day1Tests.swift */; };
-		1FEEDFF1257AF2FB003E01A7 /* AdventOfCode2020.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FEEDFE3257AF2FA003E01A7 /* AdventOfCode2020.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1FEEDFFB257AF316003E01A7 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD05184257AD67300E53EEA /* Util.swift */; };
 		1FEEDFFC257AF316003E01A7 /* Day4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD05198257AE44F00E53EEA /* Day4.swift */; };
 		1FEEDFFD257AF316003E01A7 /* Day2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD05180257AD39400E53EEA /* Day2.swift */; };
@@ -77,7 +76,6 @@
 		1FD05198257AE44F00E53EEA /* Day4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day4.swift; sourceTree = "<group>"; };
 		1FD0519C257AE69F00E53EEA /* Day4.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Day4.txt; sourceTree = "<group>"; };
 		1FEEDFE1257AF2FA003E01A7 /* AdventOfCode2020.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AdventOfCode2020.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1FEEDFE3257AF2FA003E01A7 /* AdventOfCode2020.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdventOfCode2020.h; sourceTree = "<group>"; };
 		1FEEDFE4257AF2FA003E01A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FEEDFE9257AF2FB003E01A7 /* AdventOfCode2020Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AdventOfCode2020Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FEEDFEE257AF2FB003E01A7 /* AdventOfCode2020Day1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventOfCode2020Day1Tests.swift; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 				1FD05193257ADF6500E53EEA /* Day3.swift */,
 				1FD05198257AE44F00E53EEA /* Day4.swift */,
 				1FD05184257AD67300E53EEA /* Util.swift */,
-				1FEEDFE3257AF2FA003E01A7 /* AdventOfCode2020.h */,
 				1FEEDFE4257AF2FA003E01A7 /* Info.plist */,
 			);
 			path = AdventOfCode2020;
@@ -196,7 +193,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FEEDFF1257AF2FB003E01A7 /* AdventOfCode2020.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
