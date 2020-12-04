@@ -1,5 +1,5 @@
 //
-//  AdventOfCode2020Day3Tests.swift
+//  Day3Tests.swift
 //  AdventOfCode2020Tests
 //
 //  Created by Jeff Kelley on 12/4/20.
@@ -8,7 +8,7 @@
 import AdventOfCode2020
 import XCTest
 
-class AdventOfCode2020Day3Tests: XCTestCase {
+class Day3Tests: XCTestCase {
 
     func testExample1() {
         XCTAssertEqual(Day3.example1(), "7")
