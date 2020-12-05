@@ -23,28 +23,31 @@ public protocol PuzzleWithExample2: Puzzle {
 
 public typealias FullPuzzle = PuzzleWithExample1 & PuzzleWithExample2
 
-public let AllPuzzles: [Puzzle.Type] = [
+public let allPuzzles: [Puzzle.Type] = [
     Day1.self,
     Day2.self,
     Day3.self,
     Day4.self
 ]
 
-var IsLoggingEnabled = false
+var isLoggingEnabled = false
 
-public func SetLoggingEnabled(_ enabled: Bool) {
-    IsLoggingEnabled = enabled
+public func setLoggingEnabled(_ enabled: Bool) {
+    isLoggingEnabled = enabled
 }
 
 extension Puzzle {
 
     static func log(_ message: @autoclosure() -> Any) {
-        if IsLoggingEnabled {
+        if isLoggingEnabled {
             print(message())
         }
     }
 
-    static func parseInput(_ input: String, separatedBy separator: String) -> [String] {
+    static func parseInput(
+        _ input: String,
+        separatedBy separator: String
+    ) -> [String] {
         input.components(separatedBy: separator)
     }
 
@@ -63,12 +66,12 @@ extension Puzzle {
         let fileManager = FileManager()
 
         let resourcesPath = "Sources/AdventOfCode2020/Resources/"
-        let inputSubdirectory = "inputs"
-        let spmPrefix = resourcesPath + inputSubdirectory
+        let inputDirectory = "inputs"
+        let spmPrefix = resourcesPath + inputDirectory
 
         guard let url = Bundle.module.url(forResource: "Day\(day)",
                                           withExtension: "txt",
-                                          subdirectory: inputSubdirectory) else {
+                                          subdirectory: inputDirectory) else {
             fatalError(#"Couldn't find file at "\#(spmPrefix)/Day\#(day).txt""#)
         }
 

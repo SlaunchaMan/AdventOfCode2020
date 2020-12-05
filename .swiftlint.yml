@@ -1,5 +1,6 @@
 disabled_rules:
   - statement_position
-line_length: 80
+line_length:
+  error: 80
 excluded:
   - .build

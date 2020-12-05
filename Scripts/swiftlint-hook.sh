@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-SWIFT_LINT="swift run swiftlint"
+SWIFT_LINT="swift run -c release swiftlint"
 
 if [[ $* == *--all* ]]; then
     ${SWIFT_LINT} autocorrect
@@ -9,30 +9,12 @@ if [[ $* == *--all* ]]; then
     exit 0
 fi
 
-count=1
-
-# Changed files not added to stage area yet
-for file_path in $(git diff --diff-filter=d --name-only | grep ".swift$"); do
-    export SCRIPT_INPUT_FILE_$count=$file_path
-    count=$((count + 1))
-done
+count=0
 
 # Changed files added to stage area
-for file_path in $(git diff --diff-filter=d --name-only --cached | grep ".swift$"); do
-    export SCRIPT_INPUT_FILE_$count=$file_path
-    count=$((count + 1))
-done
+file_paths=$(git diff --diff-filter=d --name-only --cached | grep ".swift$")
 
-# Newly added untracked files
-for file_path in $(git ls-files --others --exclude-standard | grep ".swift$"); do
-    export SCRIPT_INPUT_FILE_$count=$file_path
-    count=$((count + 1))
-done
-
-if [ "$count" -ne 0 ]; then
-    export SCRIPT_INPUT_FILE_COUNT=$count
-    $SWIFT_LINT autocorrect --use-script-input-files --force-exclude
-    $SWIFT_LINT lint --use-script-input-files --force-exclude
-else
-    exit 0
+if [ -n "$file_paths" ]; then
+    echo "${SWIFT_LINT} lint $file_paths"
+    ${SWIFT_LINT} lint $file_paths
 fi

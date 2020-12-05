@@ -84,6 +84,7 @@ public enum Day2: FullPuzzle {
     public static func part1() -> String {
         let input = parseInputLines(puzzleInput(), using: parseInputLine)
         return "\(input.filter { $0.0.evaluatePart1($0.1) }.count)"
+
     }
 
     public static func example2() -> String {

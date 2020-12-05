@@ -93,37 +93,24 @@ public enum Day4: PuzzleWithExample1 {
         )
     }
 
-    static func passportIsValidPart2(_ passport: [String: String]) -> Bool {
-        guard let byr = passport[intKey: "byr"] else {
-            log("missing byr")
+    static func validate(
+        key: String,
+        isInRange range: ClosedRange<Int>,
+        passport: [String: String]) -> Bool {
+        guard let value = passport[intKey: key] else {
+            log("missing \(key)")
             return false
         }
 
-        guard (1920...2002).contains(byr) else {
-            log("bad byr: \(byr)")
+        guard range.contains(value) else {
+            log("bad \(key): \(value)")
             return false
         }
 
-        guard let iyr = passport[intKey: "iyr"] else {
-            log("missing iyr")
-            return false
-        }
+        return true
+    }
 
-        guard (2010...2020).contains(iyr) else {
-            log("bad iyr: \(iyr)")
-            return false
-        }
-
-        guard let eyr = passport[intKey: "eyr"] else {
-            log("missing eyr")
-            return false
-        }
-
-        guard (2020...2030).contains(eyr) else {
-            log("bad eyr: \(eyr)")
-            return false
-        }
-
+    static func validateHeight(in passport: [String: String]) -> Bool {
         guard let hgt = passport["hgt"],
               let hgtValue = Scanner(string: hgt).scanInt()
         else { return false }
@@ -140,6 +127,16 @@ public enum Day4: PuzzleWithExample1 {
             log("bad height: \(hgt)")
             return false
         }
+
+        return true
+    }
+
+    static func passportIsValidPart2(_ passport: [String: String]) -> Bool {
+        guard validate(key: "byr", isInRange: 1920...2002, passport: passport),
+              validate(key: "iyr", isInRange: 2010...2020, passport: passport),
+              validate(key: "eyr", isInRange: 2020...2030, passport: passport),
+              validateHeight(in: passport)
+        else { return false }
 
         guard let hcl = passport["hcl"],
               hcl.count == 7,

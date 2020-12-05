@@ -54,12 +54,13 @@ public enum Day3: FullPuzzle {
     }
 
     public static func example2() -> String {
-        let collisions =
-            [treeCollisions(using: parseInputLines(exampleInput), slope: (1, 1)),
-             treeCollisions(using: parseInputLines(exampleInput), slope: (3, 1)),
-             treeCollisions(using: parseInputLines(exampleInput), slope: (5, 1)),
-             treeCollisions(using: parseInputLines(exampleInput), slope: (7, 1)),
-             treeCollisions(using: parseInputLines(exampleInput), slope: (1, 2))]
+        let collisions = [
+            treeCollisions(using: parseInputLines(exampleInput), slope: (1, 1)),
+            treeCollisions(using: parseInputLines(exampleInput), slope: (3, 1)),
+            treeCollisions(using: parseInputLines(exampleInput), slope: (5, 1)),
+            treeCollisions(using: parseInputLines(exampleInput), slope: (7, 1)),
+            treeCollisions(using: parseInputLines(exampleInput), slope: (1, 2))
+        ]
 
         return "\(collisions.reduce(1, *))"
     }

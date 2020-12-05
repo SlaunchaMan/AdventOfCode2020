@@ -19,7 +19,8 @@ struct PuzzleSolver: ParsableCommand {
             case .invalidDays(let days) where days.count == 1:
                 return "Invalid day: \(days[0])"
             case .invalidDays(let days):
-                return #"Invalid days entered: \#(days.map(String.init).joined(separator: ", "))"#
+                let formatted = days.map(String.init).joined(separator: ", ")
+                return "Invalid days entered: \(formatted)"
             }
         }
     }
@@ -49,7 +50,7 @@ struct PuzzleSolver: ParsableCommand {
     }
 
     mutating func validate() throws {
-        let validDays = Set(AllPuzzles.map { $0.day })
+        let validDays = Set(allPuzzles.map { $0.day })
         let invalidDays = Set(days).subtracting(validDays).sorted()
 
         if !invalidDays.isEmpty {
@@ -58,16 +59,16 @@ struct PuzzleSolver: ParsableCommand {
     }
 
     mutating func run() throws {
-        SetLoggingEnabled(verbose)
+        setLoggingEnabled(verbose)
 
         let outputPrefix = (days.count == 1 ? "" : "\t")
         let puzzles: [Puzzle.Type]
 
         if days.isEmpty {
-            puzzles = AllPuzzles
+            puzzles = allPuzzles
         }
         else {
-            puzzles = AllPuzzles.filter {
+            puzzles = allPuzzles.filter {
                 days.contains($0.day)
             }
         }
