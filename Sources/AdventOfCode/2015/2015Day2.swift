@@ -1,5 +1,5 @@
 //
-//  2015Day1.swift
+//  2015Day2.swift
 //  AdventOfCode
 //
 //  Created by Jeff Kelley on 12/5/20.
@@ -10,6 +10,10 @@ import Foundation
 extension Year2015 {
 
     public enum Day2: Puzzle {
+
+        public static let year: Year.Type = Year2015.self
+
+        public static let day = 2
 
         struct Package {
             let length: Int
@@ -58,10 +62,6 @@ extension Year2015 {
                 return Package(length: length, width: width, height: height)
             }
         }
-
-        public static let year: Year.Type = Year2015.self
-
-        public static let day = 2
 
         public static func part1() -> String {
             "\(packages.map(\.wrappingPaperRequired).reduce(0, +))"
