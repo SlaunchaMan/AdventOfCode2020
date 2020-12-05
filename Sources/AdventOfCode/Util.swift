@@ -1,34 +1,11 @@
 //
 //  Util.swift
-//  AdventOfCode2020
+//  AdventOfCode
 //
 //  Created by Jeff Kelley on 12/4/20.
 //
 
 import Foundation
-
-public protocol Puzzle {
-    static var day: Int { get }
-    static func part1() -> String
-    static func part2() -> String
-}
-
-public protocol PuzzleWithExample1: Puzzle {
-    static func example1() -> String
-}
-
-public protocol PuzzleWithExample2: Puzzle {
-    static func example2() -> String
-}
-
-public typealias FullPuzzle = PuzzleWithExample1 & PuzzleWithExample2
-
-public let allPuzzles: [Puzzle.Type] = [
-    Day1.self,
-    Day2.self,
-    Day3.self,
-    Day4.self
-]
 
 var isLoggingEnabled = false
 
@@ -36,13 +13,13 @@ public func setLoggingEnabled(_ enabled: Bool) {
     isLoggingEnabled = enabled
 }
 
-extension Puzzle {
-
-    static func log(_ message: @autoclosure() -> Any) {
-        if isLoggingEnabled {
-            print(message())
-        }
+func log(_ message: @autoclosure() -> Any) {
+    if isLoggingEnabled {
+        print(message())
     }
+}
+
+extension Puzzle {
 
     static func parseInput(
         _ input: String,
@@ -65,8 +42,8 @@ extension Puzzle {
     static func puzzleInput() -> String {
         let fileManager = FileManager()
 
-        let resourcesPath = "Sources/AdventOfCode2020/Resources/"
-        let inputDirectory = "inputs"
+        let resourcesPath = "Sources/AdventOfCode/Resources/"
+        let inputDirectory = "inputs/\(year.year)"
         let spmPrefix = resourcesPath + inputDirectory
 
         guard let url = Bundle.module.url(forResource: "Day\(day)",

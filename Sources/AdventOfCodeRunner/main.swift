@@ -1,29 +1,35 @@
 //
 //  main.swift
-//  AdventOfCode2020
+//  AdventOfCode
 //
 //  Created by Jeff Kelley on 12/4/20.
 //
 
-import AdventOfCode2020
+import AdventOfCode
 import ArgumentParser
 import Foundation
 
 struct PuzzleSolver: ParsableCommand {
 
     enum ParseError: Error, CustomStringConvertible {
-        case invalidDays([Int])
+        case invalidDays(year: Int, days: [Int])
+        case invalidYear(year: Int)
 
         var description: String {
             switch self {
-            case .invalidDays(let days) where days.count == 1:
-                return "Invalid day: \(days[0])"
-            case .invalidDays(let days):
+            case let .invalidDays(year, days) where days.count == 1:
+                return "Invalid day for year \(year): \(days[0])"
+            case let .invalidDays(year, days):
                 let formatted = days.map(String.init).joined(separator: ", ")
-                return "Invalid days entered: \(formatted)"
+                return "Invalid days entered for year \(year): \(formatted)"
+            case let .invalidYear(year):
+                return "No puzzles found for year \(year)"
             }
         }
     }
+
+    @Option(name: .shortAndLong)
+    var year: Int?
 
     @Option(name: [.short, .customLong("day")])
     var days: [Int] = []
@@ -36,6 +42,37 @@ struct PuzzleSolver: ParsableCommand {
 
     @Flag(name: .customLong("with-examples"))
     var enableExamples = false
+
+    var effectiveYear: Year.Type? {
+        if let year = year {
+            return allYears.first { $0.year == year }
+        }
+        else if !days.isEmpty {
+            return Year2020.self
+        }
+        else {
+            return nil
+        }
+    }
+
+    func puzzlesToRun() throws -> [Puzzle.Type] {
+        if let effectiveYear = effectiveYear {
+            if days.isEmpty {
+                return effectiveYear.allPuzzles
+            }
+            else {
+                return effectiveYear.allPuzzles.filter {
+                    days.contains($0.day)
+                }
+            }
+        }
+        else if let year = year {
+            throw ParseError.invalidYear(year: year)
+        }
+        else {
+            return allYears.flatMap { $0.allPuzzles }
+        }
+    }
 
     func performWithTiming<T>(
         duration: inout TimeInterval,
@@ -50,28 +87,24 @@ struct PuzzleSolver: ParsableCommand {
     }
 
     mutating func validate() throws {
-        let validDays = Set(allPuzzles.map { $0.day })
-        let invalidDays = Set(days).subtracting(validDays).sorted()
+        if !days.isEmpty {
+            let year = effectiveYear ?? Year2020.self
 
-        if !invalidDays.isEmpty {
-            throw ParseError.invalidDays(invalidDays)
+            let validDays = Set(year.allPuzzles.map { $0.day })
+            let invalidDays = Set(days).subtracting(validDays).sorted()
+
+            if !invalidDays.isEmpty {
+                throw ParseError.invalidDays(year: year.year, days: invalidDays)
+            }
         }
+
     }
 
     mutating func run() throws {
         setLoggingEnabled(verbose)
 
         let outputPrefix = (days.count == 1 ? "" : "\t")
-        let puzzles: [Puzzle.Type]
-
-        if days.isEmpty {
-            puzzles = allPuzzles
-        }
-        else {
-            puzzles = allPuzzles.filter {
-                days.contains($0.day)
-            }
-        }
+        let puzzles = try puzzlesToRun()
 
         var totalDuration: TimeInterval = 0
 
@@ -80,7 +113,7 @@ struct PuzzleSolver: ParsableCommand {
 
         while let puzzle = nextPuzzle {
             if puzzles.count > 1 {
-                print("Day \(puzzle.day):")
+                print("Year \(puzzle.year.year) Day \(puzzle.day):")
             }
 
             if enableExamples, let puzzle = puzzle as? PuzzleWithExample1.Type {

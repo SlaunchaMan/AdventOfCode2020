@@ -1,3 +1,3 @@
-# AdventOfCode2020
+# AdventOfCode
 
 A description of this package.

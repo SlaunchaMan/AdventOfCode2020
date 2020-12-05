@@ -2,15 +2,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "AdventOfCode2020",
+    name: "AdventOfCode",
     platforms: [
         .macOS(.v10_15)
     ],
     products: [
         .executable(
-            name: "AdventOfCode2020Runner",
+            name: "AdventOfCodeRunner",
             targets: [
-                "AdventOfCode2020Runner"
+                "AdventOfCodeRunner"
             ]
         )
     ],
@@ -30,9 +30,9 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "AdventOfCode2020Runner",
+            name: "AdventOfCodeRunner",
             dependencies: [
-                "AdventOfCode2020",
+                "AdventOfCode",
                 .product(
                     name: "ArgumentParser",
                     package: "swift-argument-parser"
@@ -40,15 +40,15 @@ let package = Package(
             ]
         ),
         .target(
-            name: "AdventOfCode2020",
+            name: "AdventOfCode",
             resources: [
                 .copy("Resources/inputs")
             ]
         ),
         .testTarget(
-            name: "AdventOfCode2020Tests",
+            name: "AdventOfCodeTests",
             dependencies: [
-                "AdventOfCode2020"
+                "AdventOfCode"
             ]
         )
     ]

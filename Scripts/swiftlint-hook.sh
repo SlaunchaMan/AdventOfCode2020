@@ -1,5 +1,5 @@
 #!/bin/bash
-SWIFT_LINT="swift run -c release swiftlint"
+SWIFT_LINT="swift run swiftlint"
 
 if [[ $* == *--all* ]]; then
     ${SWIFT_LINT} autocorrect
