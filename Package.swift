@@ -18,6 +18,10 @@ let package = Package(
         .package(
             url: "https://github.com/Apple/swift-argument-parser",
             from: "0.3.0"
+        ),
+        .package(
+            url: "https://github.com/Realm/SwiftLint",
+            from: "0.41.0"
         )
     ],
     targets: [
@@ -28,7 +32,7 @@ let package = Package(
                 .product(
                     name: "ArgumentParser",
                     package: "swift-argument-parser"
-                ),
+                )
             ]
         ),
         .target(
@@ -42,6 +46,6 @@ let package = Package(
             dependencies: [
                 "AdventOfCode2020"
             ]
-        ),
+        )
     ]
 )

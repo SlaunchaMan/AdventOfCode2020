@@ -13,7 +13,7 @@ class Day2Tests: XCTestCase {
     func testExample1() {
         XCTAssertEqual(Day2.example1(), "2")
     }
-    
+
     func testPart1() {
         XCTAssertEqual(Day2.part1(), "643")
     }
@@ -21,7 +21,7 @@ class Day2Tests: XCTestCase {
     func testExample2() {
         XCTAssertEqual(Day2.example2(), "1")
     }
-    
+
     func testPart2() {
         XCTAssertEqual(Day2.part2(), "388")
     }
