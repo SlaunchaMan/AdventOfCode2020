@@ -30,10 +30,16 @@ public let AllPuzzles: [Puzzle.Type] = [
     Day4.self
 ]
 
+var IsLoggingEnabled = false
+
+public func SetLoggingEnabled(_ enabled: Bool) {
+    IsLoggingEnabled = enabled
+}
+
 extension Puzzle {
     
     static func log(_ message: @autoclosure() -> Any) {
-        if ProcessInfo().environment["DEBUG_LOG"] != nil {
+        if IsLoggingEnabled {
             print(message())
         }
     }
