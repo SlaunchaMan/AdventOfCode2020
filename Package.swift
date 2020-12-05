@@ -22,6 +22,10 @@ let package = Package(
         .package(
             url: "https://github.com/Realm/SwiftLint",
             from: "0.41.0"
+        ),
+        .package(
+            url: "https://github.com/shibapm/Komondor.git",
+            from: "1.0.0"
         )
     ],
     targets: [
@@ -49,3 +53,15 @@ let package = Package(
         )
     ]
 )
+
+#if canImport(PackageConfig)
+import PackageConfig
+
+let config = PackageConfiguration([
+    "komondor": [
+        "pre-commit": [
+            "sh Scripts/swiftlint-hook.sh"
+        ]
+    ]
+]).write()
+#endif
