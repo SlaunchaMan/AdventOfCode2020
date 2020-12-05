@@ -1,5 +1,5 @@
 .DS_Store
 *.xcuserdatad
-Sources/AdventOfCode2020/Resources/inputs/Day*.txt
+Sources/AdventOfCode/Resources/inputs/*/Day*.txt
 *.profraw
 .build
