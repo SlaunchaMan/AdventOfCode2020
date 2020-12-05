@@ -1,5 +1,5 @@
 //
-//  Day1.swift
+//  2020Day1.swift
 //  AdventOfCode
 //
 //  Created by Jeff Kelley on 12/4/20.

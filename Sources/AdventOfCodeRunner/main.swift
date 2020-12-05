@@ -113,7 +113,7 @@ struct PuzzleSolver: ParsableCommand {
 
         while let puzzle = nextPuzzle {
             if puzzles.count > 1 {
-                print("Year \(puzzle.year.year) Day \(puzzle.day):")
+                print("\(puzzle.year.year) Day \(puzzle.day):")
             }
 
             if enableExamples, let puzzle = puzzle as? PuzzleWithExample1.Type {
