@@ -10,6 +10,21 @@ import ArgumentParser
 import Foundation
 
 struct PuzzleSolver: ParsableCommand {
+    
+    enum ParseError: Error, CustomStringConvertible {
+        case invalidDays([Int])
+        
+        var description: String {
+            switch self {
+            case .invalidDays(let days) where days.count == 1:
+                return "Invalid day: \(days[0])"
+            case .invalidDays(let days):
+                return #"Invalid days entered: \#(days.map(String.init).joined(separator: ", "))"#
+            }
+        }
+    }
+    
+    
     @Option(name: [.short, .customLong("day")])
     var days: [Int] = []
     
@@ -32,6 +47,15 @@ struct PuzzleSolver: ParsableCommand {
         
         duration = endDate.timeIntervalSince(startDate)
         return retVal
+    }
+    
+    mutating func validate() throws {
+        let validDays = Set(AllPuzzles.map { $0.day })
+        let invalidDays = Set(days).subtracting(validDays).sorted()
+        
+        if !invalidDays.isEmpty {
+            throw ParseError.invalidDays(invalidDays)
+        }
     }
     
     mutating func run() throws {
