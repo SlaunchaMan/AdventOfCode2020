@@ -51,7 +51,7 @@ extension Year2015 {
         }
 
         private static var input: String {
-            puzzleInput().trimmingCharacters(in: .whitespacesAndNewlines)
+            puzzleInput()
         }
 
         public static func part1() -> String {

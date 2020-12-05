@@ -60,7 +60,7 @@ extension Puzzle {
             fatalError("Couldn't turn file into text.")
         }
 
-        return string
+        return string.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
 }
