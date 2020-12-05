@@ -8,6 +8,7 @@
 import Foundation
 
 public enum Year2020: Year {
+
     public static let year = 2020
 
     public static var allPuzzles: [Puzzle.Type] = [
@@ -17,4 +18,5 @@ public enum Year2020: Year {
         Year2020.Day4.self,
         Year2020.Day5.self
     ]
+
 }
