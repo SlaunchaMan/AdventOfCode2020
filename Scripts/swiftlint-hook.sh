@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e
-
 SWIFT_LINT="swift run -c release swiftlint"
 
 if [[ $* == *--all* ]]; then
@@ -15,6 +13,6 @@ count=0
 file_paths=$(git diff --diff-filter=d --name-only --cached | grep ".swift$")
 
 if [ -n "$file_paths" ]; then
-    echo "${SWIFT_LINT} lint $file_paths"
     ${SWIFT_LINT} lint $file_paths
+    exit $?
 fi
