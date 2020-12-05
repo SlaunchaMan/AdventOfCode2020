@@ -89,10 +89,10 @@ struct PuzzleSolver: ParsableCommand {
             }
             
             print()
-            
-            if enableTiming {
-                print("Total Duration: \(totalDuration) seconds.")
-            }
+        }
+        
+        if enableTiming {
+            print("Total Duration: \(totalDuration) seconds.")
         }
     }
     
