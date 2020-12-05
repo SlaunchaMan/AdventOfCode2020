@@ -56,10 +56,14 @@ extension Puzzle {
     static func puzzleInput() -> String {
         let fileManager = FileManager()
         
-        let path = "\(fileManager.currentDirectoryPath)/inputs/Day\(day).txt"
+        guard let url = Bundle.module.url(forResource: "Day\(day)",
+                                          withExtension: "txt",
+                                          subdirectory: "inputs") else {
+            fatalError(#"Couldn't find file named "inputs/Day\#(day).txt""#)
+        }
         
-        guard let data = fileManager.contents(atPath: path) else {
-            fatalError("Couldn't load data.")
+        guard let data = fileManager.contents(atPath: url.path) else {
+            fatalError("Couldn't load data at URL \(url).")
         }
         
         guard let string = String(data: data, encoding: .utf8) else {

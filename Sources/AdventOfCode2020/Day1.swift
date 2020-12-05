@@ -17,7 +17,6 @@ fileprivate let exampleInput =
     1456
     """
 
-
 public enum Day1: FullPuzzle {
     
     public static let day: Int = 1

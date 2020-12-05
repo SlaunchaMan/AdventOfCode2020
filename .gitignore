@@ -1,3 +1,5 @@
 .DS_Store
 *.xcuserdatad
-inputs
+Sources/AdventOfCode2020/Resources/inputs
+*.profraw
+.build
