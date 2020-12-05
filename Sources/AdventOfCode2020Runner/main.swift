@@ -117,7 +117,7 @@ struct PuzzleSolver: ParsableCommand {
 
             nextPuzzle = iterator.next()
 
-            if nextPuzzle != nil {
+            if enableTiming || nextPuzzle != nil {
                 print()
             }
         }
