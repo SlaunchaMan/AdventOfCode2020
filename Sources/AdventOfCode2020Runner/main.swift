@@ -51,7 +51,10 @@ struct PuzzleSolver: ParsableCommand {
         
         var totalDuration: TimeInterval = 0
         
-        puzzles.forEach { puzzle in
+        var iterator = puzzles.makeIterator()
+        var nextPuzzle = iterator.next()
+        
+        while let puzzle = nextPuzzle {
             if puzzles.count > 1 {
                 print("Day \(puzzle.day):")
             }
@@ -88,7 +91,11 @@ struct PuzzleSolver: ParsableCommand {
                 totalDuration += part2Duration
             }
             
-            print()
+            nextPuzzle = iterator.next()
+            
+            if nextPuzzle != nil {
+                print()
+            }
         }
         
         if enableTiming {
