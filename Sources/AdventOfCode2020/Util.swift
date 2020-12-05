@@ -62,10 +62,14 @@ extension Puzzle {
     static func puzzleInput() -> String {
         let fileManager = FileManager()
         
+        let resourcesPath = "Sources/AdventOfCode2020/Resources/"
+        let inputSubdirectory = "inputs"
+        let spmPrefix = resourcesPath + inputSubdirectory
+        
         guard let url = Bundle.module.url(forResource: "Day\(day)",
                                           withExtension: "txt",
-                                          subdirectory: "inputs") else {
-            fatalError(#"Couldn't find file named "inputs/Day\#(day).txt""#)
+                                          subdirectory: inputSubdirectory) else {
+            fatalError(#"Couldn't find file at "\#(spmPrefix)/Day\#(day).txt""#)
         }
         
         guard let data = fileManager.contents(atPath: url.path) else {
