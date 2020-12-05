@@ -44,9 +44,9 @@ public enum Day1: FullPuzzle {
     
     public static func example1() -> String {
         let input = parseInputLines(exampleInput, using: Int.init)  
-        guard let entries = countEntries(2, in: input, summingTo: 2020) else {
-            fatalError()
-        }
+        
+        guard let entries = countEntries(2, in: input, summingTo: 2020)
+        else { fatalError() }
         
         return "\(entries.reduce(1, *))"
     }
@@ -54,9 +54,8 @@ public enum Day1: FullPuzzle {
     public static func part1() -> String {
         let part1Input = parseInputLines(puzzleInput(), using: Int.init)
         
-        guard let entries = countEntries(2, in: part1Input, summingTo: 2020) else {
-            fatalError()
-        }
+        guard let entries = countEntries(2, in: part1Input, summingTo: 2020)
+        else { fatalError() }
         
         return "\(entries.reduce(1, *))"
     }
@@ -73,9 +72,8 @@ public enum Day1: FullPuzzle {
     public static func part2() -> String {
         let part2Input = parseInputLines(puzzleInput(), using: Int.init)
         
-        guard let entries = countEntries(3, in: part2Input, summingTo: 2020) else {
-            fatalError()
-        }
+        guard let entries = countEntries(3, in: part2Input, summingTo: 2020)
+        else { fatalError() }
         
         return "\(entries.reduce(1, *))"
     }

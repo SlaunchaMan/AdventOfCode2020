@@ -78,10 +78,6 @@ public enum Day2: FullPuzzle {
     public static func example1() -> String {
         let input = parseInputLines(exampleInput, using: parseInputLine)
         
-        for (requirement, password) in input {
-            log("\(requirement): \(password): \(requirement.evaluatePart1(password) ? "valid": "invalid")")
-        }
-        
         return "\(input.filter { $0.0.evaluatePart1($0.1) }.count)"
     }
     
@@ -92,11 +88,6 @@ public enum Day2: FullPuzzle {
     
     public static func example2() -> String {
         let input = parseInputLines(exampleInput, using: parseInputLine)
-        
-        for (requirement, password) in input {
-            log("\(requirement): \(password): \(requirement.evaluatePart2(password) ? "valid": "invalid")")
-        }
-        
         return "\(input.filter { $0.0.evaluatePart2($0.1) }.count)"
     }
     

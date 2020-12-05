@@ -32,9 +32,9 @@ public let AllPuzzles: [Puzzle.Type] = [
 
 extension Puzzle {
     
-    static func log(_ message: Any) {
+    static func log(_ message: @autoclosure() -> Any) {
         if ProcessInfo().environment["DEBUG_LOG"] != nil {
-            print(message)
+            print(message())
         }
     }
     

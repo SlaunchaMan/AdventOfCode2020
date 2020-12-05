@@ -157,7 +157,8 @@ public enum Day4: PuzzleWithExample1 {
             return false
         }
         
-        guard ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(ecl) else {
+        guard ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"].contains(ecl)
+        else {
             log("bad ecl: \(ecl)")
             return false
         }
