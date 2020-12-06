@@ -22,14 +22,14 @@ extension Year2020 {
 
     public enum Day5: PuzzleWithExample1 {
 
+        public static let year: Year.Type = Year2020.self
+
+        public static let day = 5
+
         struct Seat {
             let row: Int
             let col: Int
         }
-
-        public static let year: Year.Type = Year2020.self
-
-        public static let day = 5
 
         private static func seat(
             forBoardingPass boardingPass: String
