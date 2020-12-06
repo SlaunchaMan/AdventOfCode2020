@@ -15,15 +15,10 @@ extension Year2015 {
 
         public static let day = 6
 
-        struct Point {
-            let x: Int
-            let y: Int
-        }
-
         enum Instruction {
-            case turnOn(from: Point, to: Point)
-            case turnOff(from: Point, to: Point)
-            case toggle(from: Point, to: Point)
+            case turnOn(from: Point<Int>, to: Point<Int>)
+            case turnOff(from: Point<Int>, to: Point<Int>)
+            case toggle(from: Point<Int>, to: Point<Int>)
 
             init?(string: String) {
                 let scanner = Scanner(string: string)
@@ -56,7 +51,7 @@ extension Year2015 {
                 }
             }
 
-            var startPoint: Point {
+            var startPoint: Point<Int> {
                 switch self {
                 case .turnOn(from: let point, to: _),
                      .turnOff(from: let point, to: _),
@@ -65,7 +60,7 @@ extension Year2015 {
                 }
             }
 
-            var endPoint: Point {
+            var endPoint: Point<Int> {
                 switch self {
                 case .turnOn(from: _, to: let point),
                      .turnOff(from: _, to: let point),

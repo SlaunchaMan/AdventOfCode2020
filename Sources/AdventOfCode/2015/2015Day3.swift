@@ -15,33 +15,24 @@ extension Year2015 {
 
         public static let day = 3
 
+        typealias House = Point<Int>
+
         enum Instruction: String {
             case north = "^"
             case south = "v"
             case east = ">"
             case west = "<"
-        }
 
-        struct House: Hashable, Equatable, CustomStringConvertible {
-            var x: Int
-            var y: Int
-
-            static let origin = House(x: 0, y: 0)
-
-            var description: String {
-                "(\(x), \(y))"
-            }
-
-            mutating func apply(_ instruction: Instruction) {
-                switch instruction {
+            func apply(to house: inout House) {
+                switch self {
                 case .north:
-                    y -= 1
+                    house.y -= 1
                 case .south:
-                    y += 1
+                    house.y += 1
                 case .east:
-                    x += 1
+                    house.x += 1
                 case .west:
-                    x -= 1
+                    house.x -= 1
                 }
             }
         }
@@ -59,7 +50,7 @@ extension Year2015 {
             var instructionIterator = instructions.makeIterator()
 
             while let instruction = instructionIterator.next() {
-                position.apply(instruction)
+                instruction.apply(to: &position)
                 presents[position, default: 0] += 1
             }
 
@@ -74,11 +65,11 @@ extension Year2015 {
             var instructionIterator = instructions.makeIterator()
 
             while let santaInstruction = instructionIterator.next() {
-                santaPosition.apply(santaInstruction)
+                santaInstruction.apply(to: &santaPosition)
                 presents[santaPosition, default: 0] += 1
 
                 if let roboSantaInstruction = instructionIterator.next() {
-                    roboSantaPosition.apply(roboSantaInstruction)
+                    roboSantaInstruction.apply(to: &roboSantaPosition)
                     presents[roboSantaPosition, default: 0] += 1
                 }
             }
