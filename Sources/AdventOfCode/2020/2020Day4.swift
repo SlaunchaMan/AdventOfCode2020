@@ -196,11 +196,11 @@ extension Year2020 {
         public static func example2() {
             let invalid = parseInput(example2InvalidInput, separatedBy: "\n\n")
             let invalidPassports = invalid.map(parsePassportLogEntry)
-            log(invalidPassports.count { passportIsValidPart2($0) }t)
+            log(invalidPassports.count { passportIsValidPart2($0) })
 
             let valid = parseInput(example2ValidInput, separatedBy: "\n\n")
             let validPassports = valid.map(parsePassportLogEntry)
-            log(validPassports.count { !passportIsValidPart2($0) }t)
+            log(validPassports.count { !passportIsValidPart2($0) })
         }
 
         public static func part2() -> String {

@@ -74,8 +74,8 @@ extension Year2015 {
             let original = parseInputLines(exampleInput)
             let decoded = original.map(decode)
 
-            let originalCount = original.map(\.count).reduce(0, +)
-            let decodedCount = decoded.map(\.count).reduce(0, +)
+            let originalCount = original.sum(\.count)
+            let decodedCount = decoded.sum(\.count)
 
             return "\(originalCount - decodedCount)"
         }
@@ -84,8 +84,8 @@ extension Year2015 {
             let original = parseInputLines(puzzleInput())
             let decoded = original.map(decode)
 
-            let originalCount = original.map(\.count).reduce(0, +)
-            let decodedCount = decoded.map(\.count).reduce(0, +)
+            let originalCount = original.sum(\.count)
+            let decodedCount = decoded.sum(\.count)
 
             return "\(originalCount - decodedCount)"
         }
@@ -112,8 +112,8 @@ extension Year2015 {
             let original = parseInputLines(exampleInput)
             let encoded = original.map(encode)
 
-            let originalCount = original.map(\.count).reduce(0, +)
-            let encodedCount = encoded.map(\.count).reduce(0, +)
+            let originalCount = original.sum(\.count)
+            let encodedCount = encoded.sum(\.count)
 
             return "\(encodedCount - originalCount)"
         }
@@ -122,8 +122,8 @@ extension Year2015 {
             let original = parseInputLines(puzzleInput())
             let encoded = original.map(encode)
 
-            let originalCount = original.map(\.count).reduce(0, +)
-            let encodedCount = encoded.map(\.count).reduce(0, +)
+            let originalCount = original.sum(\.count)
+            let encodedCount = encoded.sum(\.count)
 
             return "\(encodedCount - originalCount)"
         }

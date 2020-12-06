@@ -134,9 +134,7 @@ extension Year2015 {
                 }
             }
 
-            let totalBrightness = lights
-                .flatMap { $0 }
-                .reduce(0, +)
+            let totalBrightness = lights.flatMap { $0 }.sum()
 
             return "\(totalBrightness)"
         }

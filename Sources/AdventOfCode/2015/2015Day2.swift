@@ -31,7 +31,7 @@ extension Year2015 {
             }
 
             var surfaceArea: Int {
-                sideAreas.reduce(0, +) * 2
+                sideAreas.sum() * 2
             }
 
             var sideAreas: [Int] {
@@ -64,11 +64,11 @@ extension Year2015 {
         }
 
         public static func part1() -> String {
-            "\(packages.map(\.wrappingPaperRequired).reduce(0, +))"
+            "\(packages.sum(\.wrappingPaperRequired))"
         }
 
         public static func part2() -> String {
-            "\(packages.map(\.ribbonRequired).reduce(0, +))"
+            "\(packages.sum(\.ribbonRequired))"
         }
 
     }

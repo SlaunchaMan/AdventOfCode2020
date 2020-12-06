@@ -41,8 +41,7 @@ extension Year2020 {
                 }
                 .reduce(into: Set<Character>()) { $0.formUnion(Set($1)) }
             }
-            .map(\.count)
-            .reduce(0, +)
+            .sum(\.count)
         }
 
         public static func example1() -> String {
@@ -70,8 +69,7 @@ extension Year2020 {
                     }
                     return allAnswered
                 }
-                .map(\.count)
-                .reduce(0, +)
+                .sum(\.count)
         }
 
         public static func example2() -> String {

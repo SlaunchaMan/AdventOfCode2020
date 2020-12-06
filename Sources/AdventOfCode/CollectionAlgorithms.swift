@@ -43,4 +43,18 @@ extension Sequence {
         try filter(predicate).count
     }
 
+    func sum<T>(
+        _ transform: (Element) throws -> T
+    ) rethrows -> T where T: AdditiveArithmetic {
+        try map(transform).sum()
+    }
+
+}
+
+extension Sequence where Element: AdditiveArithmetic {
+
+    func sum() -> Element {
+        reduce(.zero, +)
+    }
+
 }
