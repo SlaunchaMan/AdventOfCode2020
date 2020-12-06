@@ -183,31 +183,31 @@ extension Year2020 {
             let input = parseInput(example1Input, separatedBy: "\n\n")
             let passports = input.map(parsePassportLogEntry)
 
-            return "\(passports.filter { passportIsValidPart1($0) }.count)"
+            return "\(passports.count { passportIsValidPart1($0) })"
         }
 
         public static func part1() -> String {
             let input = parseInput(puzzleInput(), separatedBy: "\n\n")
             let passports = input.map(parsePassportLogEntry)
 
-            return "\(passports.filter { passportIsValidPart1($0) }.count)"
+            return "\(passports.count { passportIsValidPart1($0) })"
         }
 
         public static func example2() {
             let invalid = parseInput(example2InvalidInput, separatedBy: "\n\n")
             let invalidPassports = invalid.map(parsePassportLogEntry)
-            log(invalidPassports.filter { passportIsValidPart2($0) }.count)
+            log(invalidPassports.count { passportIsValidPart2($0) }t)
 
             let valid = parseInput(example2ValidInput, separatedBy: "\n\n")
             let validPassports = valid.map(parsePassportLogEntry)
-            log(validPassports.filter { !passportIsValidPart2($0) }.count)
+            log(validPassports.count { !passportIsValidPart2($0) }t)
         }
 
         public static func part2() -> String {
             let input = parseInput(puzzleInput(), separatedBy: "\n\n")
             let passports = input.map(parsePassportLogEntry)
 
-            return "\(passports.filter { passportIsValidPart2($0) }.count)"
+            return "\(passports.count { passportIsValidPart2($0) })"
         }
 
     }

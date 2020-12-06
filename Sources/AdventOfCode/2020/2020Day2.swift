@@ -17,7 +17,7 @@ private let exampleInput =
 extension String {
 
     func count(of character: Character) -> Int {
-        filter { $0 == character }.count
+        count { $0 == character }
     }
 
 }
@@ -81,23 +81,23 @@ extension Year2020 {
         public static func example1() -> String {
             let input = parseInputLines(exampleInput, using: parseInputLine)
 
-            return "\(input.filter { $0.0.evaluatePart1($0.1) }.count)"
+            return "\(input.count { $0.0.evaluatePart1($0.1) })"
         }
 
         public static func part1() -> String {
             let input = parseInputLines(puzzleInput(), using: parseInputLine)
-            return "\(input.filter { $0.0.evaluatePart1($0.1) }.count)"
+            return "\(input.count { $0.0.evaluatePart1($0.1) })"
 
         }
 
         public static func example2() -> String {
             let input = parseInputLines(exampleInput, using: parseInputLine)
-            return "\(input.filter { $0.0.evaluatePart2($0.1) }.count)"
+            return "\(input.count { $0.0.evaluatePart2($0.1) })"
         }
 
         public static func part2() -> String {
             let input = parseInputLines(puzzleInput(), using: parseInputLine)
-            return "\(input.filter { $0.0.evaluatePart2($0.1) }.count)"
+            return "\(input.count { $0.0.evaluatePart2($0.1) })"
         }
 
     }

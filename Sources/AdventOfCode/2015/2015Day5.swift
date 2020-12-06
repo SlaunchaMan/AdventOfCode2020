@@ -12,7 +12,7 @@ extension String {
     var numberOfVowels: Int {
         let vowels = CharacterSet(charactersIn: "aeiou")
 
-        return unicodeScalars.filter { vowels.contains($0) }.count
+        return unicodeScalars.count { vowels.contains($0) }
     }
 
     var hasRepeatedCharacter: Bool {
@@ -87,7 +87,7 @@ extension Year2015 {
         }
 
         public static func part1() -> String {
-            "\(parseInputLines(puzzleInput()).filter(stringIsNicePart1).count)"
+            "\(parseInputLines(puzzleInput()).count(where: stringIsNicePart1))"
         }
 
         private static func stringIsNicePart2(_ string: String) -> Bool {
@@ -109,7 +109,7 @@ extension Year2015 {
         }
 
         public static func part2() -> String {
-            "\(parseInputLines(puzzleInput()).filter(stringIsNicePart2).count)"
+            "\(parseInputLines(puzzleInput()).count(where: stringIsNicePart2))"
         }
 
     }

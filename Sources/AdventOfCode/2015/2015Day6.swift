@@ -111,8 +111,7 @@ extension Year2015 {
 
             let numberOfActiveLights = lights
                 .flatMap({ $0 })
-                .filter { $0 }
-                .count
+                .count { $0 }
 
             return "\(numberOfActiveLights)"
         }
