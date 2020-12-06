@@ -50,7 +50,6 @@ extension String {
         return false
     }
 
-    // swiftlint:disable:next identifier_name
     var hasTwoCharacterSequenceWithACharacterBetween: Bool {
         var iterator = makeIterator()
 

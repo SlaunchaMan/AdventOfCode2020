@@ -23,10 +23,8 @@ extension Year2015 {
         }
 
         struct House: Hashable, Equatable, CustomStringConvertible {
-            // swiftlint:disable identifier_name 
             var x: Int
             var y: Int
-            // swiftlint:enable identifier_name
 
             static let origin = House(x: 0, y: 0)
 
