@@ -10,11 +10,6 @@ import XCTest
 
 class Year2015Day7Tests: XCTestCase {
 
-    override class func setUp() {
-        super.setUp()
-        setLoggingEnabled(true)
-    }
-
     func testExample1() {
         XCTAssertEqual(Year2015.Day7.example1(),
                        """
