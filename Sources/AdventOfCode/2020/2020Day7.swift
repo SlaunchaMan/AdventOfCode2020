@@ -45,7 +45,7 @@ extension Year2020 {
 
             init?(scanner: Scanner) {
                 var bags: [String: Int] = [:]
-                
+
                 let terminators = CharacterSet(charactersIn: " .")
 
                 while !scanner.isAtEnd {
@@ -90,7 +90,7 @@ extension Year2020 {
 
                 return bags.contains { color, _ in
                     self.bagColor(color,
-                                  eventuallyContains: targetColor, 
+                                  eventuallyContains: targetColor,
                                   in: rules)
                 }
 
