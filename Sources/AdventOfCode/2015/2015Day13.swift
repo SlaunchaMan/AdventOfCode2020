@@ -37,7 +37,7 @@ extension Year2015 {
         ) -> [String: [String: Int]] {
             lines.reduce(into: [String: [String: Int]]()) {
                 let scanner = Scanner(string: $1)
-                
+
                 let penultimateToken = "happiness units by sitting next to "
 
                 guard let name = scanner.scanUpToString(" "),
