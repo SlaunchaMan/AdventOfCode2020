@@ -16,6 +16,10 @@ let package = Package(
     ],
     dependencies: [
         .package(
+            url: "https://github.com/apple/swift-algorithms",
+            from: "0.0.1"
+        ),
+        .package(
             url: "https://github.com/Apple/swift-argument-parser",
             from: "0.3.0"
         ),
@@ -41,6 +45,12 @@ let package = Package(
         ),
         .target(
             name: "AdventOfCode",
+            dependencies: [
+                .product(
+                    name: "Algorithms",
+                    package: "swift-algorithms"
+                )
+            ],
             resources: [
                 .copy("Resources/inputs")
             ]
