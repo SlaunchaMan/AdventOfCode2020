@@ -14,21 +14,21 @@ extension Year2015 {
         public static let year: Year.Type = Year2015.self
 
         public static let day = 10
-        
+
         private static func lookAndSayStep(_ input: String,
                                            iterations: Int = 1) -> String {
             var input = input
             var output = ""
-            
+
             for _ in 0 ..< iterations {
                 output = ""
                 var iterator = input.makeIterator()
                 var currentCharacter = iterator.next()
                 var counter = 1
-                
+
                 while let current = currentCharacter {
                     let next = iterator.next()
-                    
+
                     if current == next {
                         counter += 1
                     }
@@ -38,10 +38,10 @@ extension Year2015 {
                         currentCharacter = next
                     }
                 }
-                
+
                 input = output
             }
-            
+
             return output
         }
 
