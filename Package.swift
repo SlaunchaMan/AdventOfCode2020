@@ -8,6 +8,12 @@ let package = Package(
     ],
     products: [
         .executable(
+            name: "AdventOfCodeConfigurator",
+            targets: [
+                "AdventOfCodeConfigurator"
+            ]
+        ),
+        .executable(
             name: "AdventOfCodeRunner",
             targets: [
                 "AdventOfCodeRunner"
@@ -33,6 +39,15 @@ let package = Package(
         )
     ],
     targets: [
+        .target(
+            name: "AdventOfCodeConfigurator",
+            dependencies: [
+                .product(
+                    name: "ArgumentParser",
+                    package: "swift-argument-parser"
+                )
+            ]
+        ),
         .target(
             name: "AdventOfCodeRunner",
             dependencies: [
