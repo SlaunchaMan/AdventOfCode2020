@@ -22,14 +22,14 @@ struct AdventOfCodeConfigurator: ParsableCommand {
         @Option(name: .shortAndLong)
         var day: Int
 
-        let fileDateFormatter: DateFormatter = {
+        static let fileDateFormatter: DateFormatter = {
             let formatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/d/yy"
+            formatter.dateFormat = "MM/d/yy"
             return formatter
         }()
 
         var formattedDate: String {
-            fileDateFormatter.string(from: Date())
+            Self.fileDateFormatter.string(from: Date())
         }
 
         var swiftFileContents: String {
