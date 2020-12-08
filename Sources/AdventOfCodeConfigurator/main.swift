@@ -24,6 +24,18 @@ extension String {
 
 }
 
+enum ExampleOption: String, EnumerableFlag {
+    case one = "1"
+    case two = "2"
+
+    static func name(for value: ExampleOption) -> NameSpecification {
+        switch value {
+        case .one: return .customLong("with-example-1")
+        case .two: return .customLong("with-example-2")
+        }
+    }
+}
+
 struct AdventOfCodeConfigurator: ParsableCommand {
 
     static var configuration = CommandConfiguration(
@@ -38,6 +50,9 @@ struct AdventOfCodeConfigurator: ParsableCommand {
         @Option(name: .shortAndLong)
         var day: Int
 
+        @Flag
+        var examples: [ExampleOption] = []
+
         static let fileDateFormatter: DateFormatter = {
             let formatter = DateFormatter()
             formatter.dateFormat = "MM/d/yy"
@@ -49,7 +64,17 @@ struct AdventOfCodeConfigurator: ParsableCommand {
         }
 
         var swiftFileContents: String {
-            """
+            func example(_ n: Int) -> String {
+                """
+
+                        public static func example\(n)() -> String {
+                            ""
+                        }
+
+                """
+            }
+
+            return """
             //
             //  \(year)Day\(day).swift
             //  AdventOfCode
@@ -66,11 +91,11 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                     public static let year: Year.Type = Year\(year).self
 
                     public static let day = \(day)
-
+            \(examples.contains(.one) ? example(1) : "")
                     public static func part1() -> String {
                         ""
                     }
-
+            \(examples.contains(.two) ? example(2) : "")
                     public static func part2() -> String {
                         ""
                     }
@@ -82,7 +107,17 @@ struct AdventOfCodeConfigurator: ParsableCommand {
         }
 
         var testFileContents: String {
-            """
+            func testExample(_ n: Int) -> String {
+                """
+
+                    func testExample\(n)() {
+                        XCTAssertEqual(Year\(year).Day\(day).example\(n)(), "")
+                    }
+
+                """
+            }
+
+            return """
             //
             //  \(year)Day\(day)Tests.swift
             //  AdventOfCodeTests
@@ -94,11 +129,11 @@ struct AdventOfCodeConfigurator: ParsableCommand {
             import XCTest
 
             class Year\(year)Day\(day)Tests: XCTestCase {
-
+            \(examples.contains(.one) ? testExample(1) : "")
                 func testPart1() {
                     XCTAssertEqual(Year\(year).Day\(day).part1(), "")
                 }
-
+            \(examples.contains(.two) ? testExample(2) : "")
                 func testPart2() {
                     XCTAssertEqual(Year\(year).Day\(day).part2(), "")
                 }
