@@ -2,7 +2,7 @@
 //  2015.swift
 //  AdventOfCode
 //
-//  Created by Jeff Kelley on 12/5/20.
+//  https://github.com/SlaunchaMan/AdventOfCode2020
 //
 
 import Foundation

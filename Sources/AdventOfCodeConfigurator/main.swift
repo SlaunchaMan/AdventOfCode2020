@@ -8,6 +8,22 @@
 import ArgumentParser
 import Foundation
 
+extension String {
+
+    func removingFirst(_ k: Int) -> String {
+        var result = self
+        result.removeFirst(k)
+        return result
+    }
+
+    func removingLast(_ k: Int) -> String {
+        var result = self
+        result.removeLast(k)
+        return result
+    }
+
+}
+
 struct AdventOfCodeConfigurator: ParsableCommand {
 
     static var configuration = CommandConfiguration(
@@ -91,19 +107,57 @@ struct AdventOfCodeConfigurator: ParsableCommand {
             """
         }
 
+        func yearIndexContents(days: [Int]) -> String {
+            let formattedDays = days.map {
+                "        Year\(year).Day\($0).self"
+            }.joined(separator: ",\n")
+
+            return """
+            //
+            //  \(year).swift
+            //  AdventOfCode
+            //
+            //  https://github.com/SlaunchaMan/AdventOfCode2020
+            //
+
+            import Foundation
+
+            public enum Year\(year): Year {
+
+                public static let year = \(year)
+
+                public static var allPuzzles: [Puzzle.Type] = [
+            \(formattedDays)
+                ]
+
+            }
+            """
+        }
+
         mutating func run() throws {
             let fileManager = FileManager()
 
             let sourcesPath = fileManager.currentDirectoryPath + "/Sources"
             let testsPath = fileManager.currentDirectoryPath + "/Tests"
 
-            let frameworkPath = "\(sourcesPath)/AdventOfCode"
-            let resourcesPath = "\(frameworkPath)/Resources"
-            let testPath = "\(testsPath)/AdventOfCodeTests"
+            let frameworkPath = "\(sourcesPath)/AdventOfCode/\(year)"
+            let rscPath = "\(sourcesPath)/AdventOfCode/Resources/inputs/\(year)"
+            let testPath = "\(testsPath)/AdventOfCodeTests/\(year)"
 
-            let sourcePath = "\(frameworkPath)/\(year)/\(year)Day\(day).swift"
-            let inputPath = "\(resourcesPath)/inputs/\(year)/Day\(day).txt"
-            let testFilePath = "\(testPath)/\(year)/\(year)Day\(day)Tests.swift"
+            let sourcePath = "\(frameworkPath)/\(year)Day\(day).swift"
+            let yearIndexPath = "\(frameworkPath)/\(year).swift"
+            let inputPath = "\(rscPath)/Day\(day).txt"
+            let testFilePath = "\(testPath)/\(year)Day\(day)Tests.swift"
+
+            for folder in [frameworkPath, rscPath, testPath] {
+                if !fileManager.fileExists(atPath: folder) {
+                    try fileManager.createDirectory(
+                        atPath: folder,
+                        withIntermediateDirectories: true,
+                        attributes: nil
+                    )
+                }
+            }
 
             try swiftFileContents.write(toFile: sourcePath,
                                         atomically: true,
@@ -133,6 +187,17 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                                        contents: nil,
                                        attributes: nil)
             }
+
+            let allDays = try fileManager
+                .contentsOfDirectory(atPath: rscPath)
+                .map { $0.removingFirst(3) }
+                .map { $0.removingLast(4) }
+                .compactMap(Int.init)
+                .sorted()
+
+            try yearIndexContents(days: allDays).write(toFile: yearIndexPath,
+                                                       atomically: true,
+                                                       encoding: .utf8)
         }
 
     }
