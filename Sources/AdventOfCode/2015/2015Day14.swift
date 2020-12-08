@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import StringDecoder
 
 private let exampleInput =
     """
@@ -21,29 +22,11 @@ extension Year2015 {
 
         public static let day = 14
 
-        struct Reindeer {
+        struct Reindeer: Decodable {
             let name: String
             let speed: Int
             let sprintDuration: Int
             let restDuration: Int
-
-            init?(string: String) {
-                let scanner = Scanner(string: string)
-
-                guard let name = scanner.scanUpToCharacters(from: .whitespaces),
-                      scanner.scanUpToCharacters(from: .decimalDigits) != nil,
-                      let speed = scanner.scanInt(),
-                      scanner.scanUpToCharacters(from: .decimalDigits) != nil,
-                      let sprintDuration = scanner.scanInt(),
-                      scanner.scanUpToCharacters(from: .decimalDigits) != nil,
-                      let restDuration = scanner.scanInt()
-                else { return nil }
-
-                self.name = name
-                self.speed = speed
-                self.sprintDuration = sprintDuration
-                self.restDuration = restDuration
-            }
 
             func position(after second: Int) -> Int {
                 var distance = 0
@@ -65,8 +48,22 @@ extension Year2015 {
             case resting(remainingDuration: Int)
         }
 
+        private static func parseReindeer(from input: String) -> Reindeer? {
+            // swiftlint:disable:next line_length
+            let decoder = StringDecoder(formatString: "$(name) can fly $(speed) km\\/s for $(sprintDuration) seconds, but then must rest for $(restDuration) seconds\\.")
+
+            do {
+                return try decoder.decode(Reindeer.self, from: input)
+            }
+            catch {
+                print(error)
+                return nil
+            }
+        }
+
         public static func example1() -> String {
-            let reindeer = parseInputLines(exampleInput, using: Reindeer.init)
+            let reindeer = parseInputLines(exampleInput,
+                                           using: parseReindeer(from:))
 
             let finalDistances = reindeer.map { $0.position(after: 1000) }
 
@@ -74,7 +71,8 @@ extension Year2015 {
         }
 
         public static func part1() -> String {
-            let reindeer = parseInputLines(puzzleInput(), using: Reindeer.init)
+            let reindeer = parseInputLines(puzzleInput(),
+                                           using: parseReindeer(from:))
 
             let finalDistances = reindeer.map { $0.position(after: 2503) }
 
@@ -148,7 +146,8 @@ extension Year2015 {
         }
 
         public static func example2() -> String {
-            let reindeer = parseInputLines(exampleInput, using: Reindeer.init)
+            let reindeer = parseInputLines(exampleInput,
+                                           using: parseReindeer(from:))
 
             let finalScores = scores(after: 1000, reindeer: reindeer)
 
@@ -160,7 +159,8 @@ extension Year2015 {
         }
 
         public static func part2() -> String {
-            let reindeer = parseInputLines(puzzleInput(), using: Reindeer.init)
+            let reindeer = parseInputLines(puzzleInput(),
+                                           using: parseReindeer(from:))
 
             let finalScores = scores(after: 2503, reindeer: reindeer)
 

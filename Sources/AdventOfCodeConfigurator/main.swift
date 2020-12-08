@@ -169,6 +169,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
             """
         }
 
+        // swiftlint:disable:next function_body_length
         mutating func run() throws {
             let fileManager = FileManager()
 

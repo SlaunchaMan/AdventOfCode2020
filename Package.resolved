@@ -65,6 +65,15 @@
         }
       },
       {
+        "package": "StringDecoder",
+        "repositoryURL": "git@github.com:SlaunchaMan/StringDecoder.git",
+        "state": {
+          "branch": null,
+          "revision": "35f3880c1ecf90bba9beeeef4aaaed00e1f42da9",
+          "version": "0.0.2"
+        }
+      },
+      {
         "package": "swift-algorithms",
         "repositoryURL": "https://github.com/apple/swift-algorithms",
         "state": {

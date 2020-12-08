@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import StringDecoder
 
 private let exampleInput =
     """
@@ -29,18 +30,19 @@ extension Year2020 {
         public static let year: Year.Type = Year2020.self
         public static let day: Int = 2
 
-        struct Requirement: CustomStringConvertible {
+        struct Requirement: Decodable, CustomStringConvertible {
             let firstNumber: Int
             let secondNumber: Int
-            let letter: Character
+            let letter: String
+            let password: String
 
             var range: ClosedRange<Int> { firstNumber...secondNumber }
 
-            func evaluatePart1(_ password: String) -> Bool {
-                range.contains(password.count(of: letter))
+            func evaluatePart1() -> Bool {
+                range.contains(password.count(of: letter.first!))
             }
 
-            func evaluatePart2(_ password: String) -> Bool {
+            func evaluatePart2() -> Bool {
                 let firstIndex = password.index(password.startIndex,
                                                 offsetBy: firstNumber - 1)
 
@@ -48,9 +50,9 @@ extension Year2020 {
                                                  offsetBy: secondNumber - 1)
 
                 switch (password[firstIndex], password[secondIndex]) {
-                case (letter, letter): return false
-                case (letter, _): return true
-                case (_, letter): return true
+                case (letter.first, letter.first): return false
+                case (letter.first, _): return true
+                case (_, letter.first): return true
                 default: return false
                 }
             }
@@ -60,44 +62,35 @@ extension Year2020 {
             }
         }
 
-        static func parseInputLine(_ line: String) -> (Requirement, String)? {
-            let scanner = Scanner(string: line)
+        static func parseInputLine(_ line: String) -> Requirement? {
+            let decoder = StringDecoder(
+                formatString:
+                    "$(firstNumber)-$(secondNumber) $(letter): $(password)"
+            )
 
-            guard let first = scanner.scanInt() else { return nil }
-            _ = scanner.scanCharacter()
-            guard let second = scanner.scanInt() else { return nil }
-            _ = scanner.scanString(" ")
-            guard let target = scanner.scanCharacter() else { return nil }
-            _ = scanner.scanString(": ")
-
-            guard let string = scanner.scanUpToString("\n") else { return nil }
-
-            return (Requirement(firstNumber: first,
-                                secondNumber: second,
-                                letter: target),
-                    string)
+            return try? decoder.decode(Requirement.self, from: line)
         }
 
         public static func example1() -> String {
             let input = parseInputLines(exampleInput, using: parseInputLine)
 
-            return "\(input.count { $0.0.evaluatePart1($0.1) })"
+            return "\(input.count { $0.evaluatePart1() })"
         }
 
         public static func part1() -> String {
             let input = parseInputLines(puzzleInput(), using: parseInputLine)
-            return "\(input.count { $0.0.evaluatePart1($0.1) })"
+            return "\(input.count { $0.evaluatePart1() })"
 
         }
 
         public static func example2() -> String {
             let input = parseInputLines(exampleInput, using: parseInputLine)
-            return "\(input.count { $0.0.evaluatePart2($0.1) })"
+            return "\(input.count { $0.evaluatePart2() })"
         }
 
         public static func part2() -> String {
             let input = parseInputLines(puzzleInput(), using: parseInputLine)
-            return "\(input.count { $0.0.evaluatePart2($0.1) })"
+            return "\(input.count { $0.evaluatePart2() })"
         }
 
     }

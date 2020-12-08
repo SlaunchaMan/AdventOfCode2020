@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import StringDecoder
 
 private let exampleInput =
     """

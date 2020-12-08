@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import StringDecoder
 
 extension Year2015 {
 
@@ -15,7 +16,7 @@ extension Year2015 {
 
         public static let day = 2
 
-        struct Package {
+        struct Package: Decodable {
             let length: Int
             let width: Int
             let height: Int
@@ -49,17 +50,12 @@ extension Year2015 {
         }
 
         private static var packages: [Package] {
-            parseInputLines(puzzleInput()) { line in
-                let scanner = Scanner(string: line)
+            let decoder = StringDecoder(
+                formatString: "$(length)x$(width)x$(height)"
+            )
 
-                guard let length = scanner.scanInt(),
-                      scanner.scanCharacter() != nil,
-                      let width = scanner.scanInt(),
-                      scanner.scanCharacter() != nil,
-                      let height = scanner.scanInt()
-                else { return nil }
-
-                return Package(length: length, width: width, height: height)
+            return parseInputLines(puzzleInput()) {
+                try? decoder.decode(Package.self, from: $0)
             }
         }
 

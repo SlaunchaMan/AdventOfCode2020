@@ -34,6 +34,10 @@ let package = Package(
             from: "0.41.0"
         ),
         .package(
+            url: "git@github.com:SlaunchaMan/StringDecoder.git",
+            from: "0.0.2"
+        ),
+        .package(
             url: "https://github.com/shibapm/Komondor.git",
             from: "1.0.0"
         )
@@ -64,7 +68,8 @@ let package = Package(
                 .product(
                     name: "Algorithms",
                     package: "swift-algorithms"
-                )
+                ),
+                "StringDecoder"
             ],
             resources: [
                 .copy("Resources/inputs")
