@@ -90,7 +90,7 @@ extension Year2020 {
                 var endIndex = numbers.index(after: startIndex)
 
                 while numbers[startIndex ... endIndex].sum() < firstInvalid {
-                    guard endIndex < numbers.index(before: numbers.endIndex)
+                    guard endIndex < numbers.lastIndex
                     else { break }
 
                     endIndex = numbers.index(after: endIndex)
