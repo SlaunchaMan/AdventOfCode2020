@@ -25,6 +25,31 @@ extension Year2015 {
 
         public static let day = 18
 
+        private static func nextState(after state: [String]) -> [String] {
+            var nextState = state
+
+            for (outerIndex, line) in state.indexed() {
+                for (innerIndex, _) in line.indexed() {
+                    let position = (outerIndex, innerIndex)
+                    let neighbors = state.neighbors(of: position)
+
+                    let livingNeighbors = neighbors.count { neighborPos in
+                        state[neighborPos] == "#"
+                    }
+
+                    switch (state[position], livingNeighbors) {
+                    case (_, 3), ("#", 2):
+                        nextState[position] = "#"
+
+                    default:
+                        nextState[position] = "."
+                    }
+                }
+            }
+
+            return nextState
+        }
+
         private static func iterate(
             lights: [String],
             iterations: Int,
@@ -37,26 +62,7 @@ extension Year2015 {
             }
 
             for _ in 0 ..< iterations {
-                var nextState = state
-
-                for (outerIndex, line) in state.indexed() {
-                    for (innerIndex, _) in line.indexed() {
-                        let position = (outerIndex, innerIndex)
-                        let neighbors = state.neighbors(of: position)
-
-                        let livingNeighbors = neighbors.count { neighborPos in
-                            state[neighborPos] == "#"
-                        }
-
-                        switch (state[position], livingNeighbors) {
-                        case (_, 3), ("#", 2):
-                            nextState[position] = "#"
-
-                        default:
-                            nextState[position] = "."
-                        }
-                    }
-                }
+                var nextState = self.nextState(after: state)
 
                 for position in alwaysEnabledIndexes {
                     nextState[position] = "#"
