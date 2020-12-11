@@ -36,6 +36,33 @@ extension StringProtocol {
         return false
     }
 
+    func allRanges<T: StringProtocol>(
+        of aString: T,
+        options: String.CompareOptions = [],
+        locale: Locale? = nil
+    ) -> [Range<Index>] {
+        var ranges: [Range<Index>] = []
+
+        var searchRange = startIndex ..< endIndex
+
+        while let nextRange = range(
+                of: aString,
+                options: options,
+                range: searchRange,
+                locale: locale
+        ) {
+            ranges.append(nextRange)
+
+            let nextLowerBound = index(after: searchRange.lowerBound)
+
+            guard nextLowerBound < endIndex else { break }
+
+            searchRange = nextLowerBound ..< endIndex
+        }
+
+        return ranges
+    }
+
 }
 
 extension Sequence {
