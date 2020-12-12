@@ -102,7 +102,7 @@ extension Year2015 {
 
             while true {
                 // Player’s turn
-                let playerDamage = playerStats.damage - enemyStats.armor
+                let playerDamage = max(1, playerStats.damage - enemyStats.armor)
                 enemyHP -= playerDamage
                 // swiftlint:disable:next line_length
                 log("The player deals \(playerStats.damage)-\(enemyStats.armor) = \(playerDamage) damage; the boss goes down to \(enemyHP) hit points.")
@@ -112,7 +112,7 @@ extension Year2015 {
                 }
 
                 // Enemy’s turn
-                let enemyDamage = enemyStats.damage - playerStats.armor
+                let enemyDamage = max(1, enemyStats.damage - playerStats.armor)
                 playerHP -= enemyDamage
                 // swiftlint:disable:next line_length
                 log("The boss deals \(enemyStats.damage)-\(playerStats.armor) = \(enemyDamage) damage; the player goes down to \(playerHP) hit points.")
