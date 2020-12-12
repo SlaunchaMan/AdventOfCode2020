@@ -101,7 +101,9 @@ struct PuzzleSolver: ParsableCommand {
     }
 
     mutating func run() throws {
-        setLoggingEnabled(verbose)
+        if verbose {
+            setLoggingEnabled()
+        }
 
         let outputPrefix = (days.count == 1 ? "" : "\t")
         let puzzles = try puzzlesToRun()

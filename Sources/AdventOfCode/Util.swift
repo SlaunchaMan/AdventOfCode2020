@@ -7,9 +7,10 @@
 
 import Foundation
 
-var isLoggingEnabled = false
+var isLoggingEnabled = (ProcessInfo().environment["ENABLE_LOGGING"] != nil) ?
+    true : false
 
-public func setLoggingEnabled(_ enabled: Bool) {
+public func setLoggingEnabled(_ enabled: Bool = true) {
     isLoggingEnabled = enabled
 }
 
