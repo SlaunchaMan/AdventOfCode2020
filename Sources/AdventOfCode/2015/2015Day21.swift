@@ -136,10 +136,9 @@ extension Year2015 {
                     return runGame(playerStats: playerStats,
                                    enemyStats: enemyStats) == .playerWon
                 }
-                .map { $0.sum(\.cost) }
-                .min()!
+                .min { $0.sum(\.cost) < $1.sum(\.cost) }!
 
-            return "\(cheapestVictory)"
+            return "\(cheapestVictory.sum(\.cost))"
         }
 
         public static func part2() -> String {
@@ -155,10 +154,9 @@ extension Year2015 {
                     return runGame(playerStats: playerStats,
                                    enemyStats: enemyStats) == .playerLost
                 }
-                .map { $0.sum(\.cost) }
-                .max()!
+                .max { $0.sum(\.cost) < $1.sum(\.cost) }!
 
-            return "\(mostExpensiveLoss)"
+            return "\(mostExpensiveLoss.sum(\.cost))"
         }
 
     }
