@@ -21,7 +21,7 @@ extension Int {
         if start > 1 {
             factors = factors.filter { $0 >= start }
         }
-        
+
         return factors.sorted()
     }
 
