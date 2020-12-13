@@ -33,6 +33,7 @@ extension Year2015 {
             case jumpIfEven(Register, Int)
             case jumpIfOne(Register, Int)
 
+            // swiftlint:disable:next cyclomatic_complexity
             init?(string: String) {
                 let scanner = Scanner(string: string)
 

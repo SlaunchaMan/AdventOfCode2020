@@ -10,6 +10,7 @@ import Foundation
 
 extension Year2015 {
 
+    // swiftlint:disable:next type_body_length
     public enum Day22: FullPuzzle {
 
         public static let year: Year.Type = Year2015.self
