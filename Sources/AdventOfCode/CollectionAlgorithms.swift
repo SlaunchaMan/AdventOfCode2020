@@ -87,7 +87,7 @@ extension Sequence {
             group.enter()
 
             performQueue.async {
-                if body(element) { stop = true}
+                if body(element) { stop = true }
                 group.leave()
             }
 
