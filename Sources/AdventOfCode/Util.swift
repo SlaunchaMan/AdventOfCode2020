@@ -7,14 +7,37 @@
 
 import Foundation
 
-var isLoggingEnabled = (ProcessInfo().environment["ENABLE_LOGGING"] != nil) ?
+private var isLoggingEnabled =
+    (ProcessInfo().environment["ENABLE_LOGGING"] != nil) ?
     true : false
+
+private var isCapturingLogs = false
+private var capturedLog: String?
+
+public func captureLogOutput(during workItem: () -> Void) -> String {
+    isCapturingLogs = true
+    capturedLog = ""
+    workItem()
+    isCapturingLogs = false
+
+    let captured = capturedLog!
+    capturedLog = nil
+
+    return captured
+}
 
 public func setLoggingEnabled(_ enabled: Bool = true) {
     isLoggingEnabled = enabled
 }
 
 func log(_ message: @autoclosure() -> Any) {
+    if isCapturingLogs {
+        if !capturedLog!.isEmpty {
+            capturedLog?.append("\n")
+        }
+
+        capturedLog?.append(String(describing: message()))
+    }
     if isLoggingEnabled {
         print(message())
     }
