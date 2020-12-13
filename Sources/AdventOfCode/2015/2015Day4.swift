@@ -22,9 +22,10 @@ extension Year2015 {
         ) -> Int {
             let zeroString = String(repeating: "0", count: zeroes)
 
-            let answerQueue = DispatchQueue(label: "answer")
+            let answerQueue = DispatchQueue(label: "answer",
+                                            attributes: [.concurrent])
 
-            var answer: Int = .max
+            var smallestAnswer: Int = .max
 
             (0...).forEachConcurrent { candidate in
                 if let data = "\(secretKey)\(candidate)".data(using: .utf8) {
@@ -38,9 +39,11 @@ extension Year2015 {
                         .joined()
 
                     if prefixHash.hasPrefix(zeroString) {
-                        answerQueue.sync {
-                            if answer > candidate {
-                                answer = candidate
+                        let answer = answerQueue.sync { smallestAnswer }
+
+                        if answer > candidate {
+                            answerQueue.async(flags: .barrier) {
+                                smallestAnswer = candidate
                             }
                         }
 
@@ -51,7 +54,7 @@ extension Year2015 {
                 return false
             }
 
-            return answer
+            return answerQueue.sync { smallestAnswer }
         }
 
         public static func example1() -> String {
