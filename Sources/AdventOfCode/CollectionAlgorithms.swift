@@ -77,6 +77,26 @@ extension Sequence {
         try map(transform).sum()
     }
 
+    func forEachConcurrent(_ body: @escaping (Element) -> Bool) {
+        let performQueue = DispatchQueue.global()
+        let group = DispatchGroup()
+
+        var stop = false
+
+        for element in self {
+            group.enter()
+
+            performQueue.async {
+                if body(element) { stop = true}
+                group.leave()
+            }
+
+            if stop { break }
+        }
+
+        group.wait()
+    }
+
 }
 
 extension Sequence where Element: AdditiveArithmetic {

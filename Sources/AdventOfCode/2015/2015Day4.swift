@@ -22,7 +22,11 @@ extension Year2015 {
         ) -> Int {
             let zeroString = String(repeating: "0", count: zeroes)
 
-            for candidate in 0... {
+            let answerQueue = DispatchQueue(label: "answer")
+
+            var answer: Int = .max
+
+            (0...).forEachConcurrent { candidate in
                 if let data = "\(secretKey)\(candidate)".data(using: .utf8) {
                     let hash = Insecure.MD5.hash(data: data)
 
@@ -34,12 +38,20 @@ extension Year2015 {
                         .joined()
 
                     if prefixHash.hasPrefix(zeroString) {
-                        return candidate
+                        answerQueue.sync {
+                            if answer > candidate {
+                                answer = candidate
+                            }
+                        }
+
+                        return true
                     }
                 }
+
+                return false
             }
 
-            fatalError()
+            return answer
         }
 
         public static func example1() -> String {
