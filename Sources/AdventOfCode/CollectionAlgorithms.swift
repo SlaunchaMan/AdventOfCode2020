@@ -76,27 +76,63 @@ extension Sequence {
     ) rethrows -> T where T: AdditiveArithmetic {
         try map(transform).sum()
     }
-
-    func forEachConcurrent(_ body: @escaping (Element) -> Bool) {
-        let performQueue = DispatchQueue.global()
-        let group = DispatchGroup()
-
+    
+    private func forEachConcurrentDispatch(
+        queue: DispatchQueue,
+        group: DispatchGroup,
+        body: @escaping (Element) -> Bool
+    ) {
         var stop = false
 
         for element in self {
             group.enter()
 
-            performQueue.async {
+            queue.async {
                 if body(element) { stop = true }
                 group.leave()
             }
 
             if stop { break }
         }
+    }
+    
+    func forEachConcurrent(
+        onQueue queue: DispatchQueue = .global(),
+        _ body: @escaping (Element) -> Bool
+    ) {
+        let group = DispatchGroup()
+        
+        forEachConcurrentDispatch(queue: queue, group: group, body: body)
 
         group.wait()
     }
+    
+    @discardableResult
+    func forEachConcurrent(
+        onQueue queue: DispatchQueue = .global(),
+        timeout: DispatchTime,
+        _ body: @escaping (Element) -> Bool
+    ) -> DispatchTimeoutResult {
+        let group = DispatchGroup()
+        
+        forEachConcurrentDispatch(queue: queue, group: group, body: body)
 
+        return group.wait(timeout: timeout)
+    }
+
+    @discardableResult
+    func forEachConcurrent(
+        onQueue queue: DispatchQueue = .global(),
+        wallTimeout timeout: DispatchWallTime,
+        _ body: @escaping (Element) -> Bool
+    ) -> DispatchTimeoutResult {
+        let group = DispatchGroup()
+        
+        forEachConcurrentDispatch(queue: queue, group: group, body: body)
+
+        return group.wait(wallTimeout: timeout)
+    }
+    
 }
 
 extension Sequence where Element: AdditiveArithmetic {

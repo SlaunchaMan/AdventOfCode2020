@@ -11,7 +11,7 @@ import XCTest
 class Year2015Day25Tests: XCTestCase {
 
     func testPart1() {
-        XCTAssertEqual(Year2015.Day25.part1(), "")
+        XCTAssertEqual(Year2015.Day25.part1(), "8997277")
     }
 
     func testPart2() {

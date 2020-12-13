@@ -10,13 +10,19 @@ import Foundation
 extension Int {
 
     public func factors(startingAt start: Int = 1) -> [Int] {
-        var factors: [Int] = []
+        var factors: Set<Int> = []
+        let stop = Int(sqrt(Double(self))) + 1
 
-        for factor in start...self where isMultiple(of: factor) {
-            factors.append(factor)
+        for factor in 1...stop where isMultiple(of: factor) {
+            factors.insert(factor)
+            factors.insert(self / factor)
         }
 
-        return factors
+        if start > 1 {
+            factors = factors.filter { $0 >= start }
+        }
+        
+        return factors.sorted()
     }
 
 }
