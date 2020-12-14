@@ -5,6 +5,8 @@
 //  Created by Jeff Kelley on 12/11/20.
 //
 
+#if DEBUG
+
 @testable import AdventOfCode
 import XCTest
 
@@ -107,3 +109,5 @@ class DirectionalNeighborsTests: XCTestCase {
     // MARK: -
 
 }
+
+#endif

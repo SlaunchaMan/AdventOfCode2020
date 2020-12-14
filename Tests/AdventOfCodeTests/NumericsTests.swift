@@ -5,6 +5,8 @@
 //  Created by Jeff Kelley on 12/11/20.
 //
 
+#if DEBUG
+
 @testable import AdventOfCode
 import XCTest
 
@@ -20,3 +22,5 @@ class NumericsTests: XCTestCase {
     }
 
 }
+
+#endif
