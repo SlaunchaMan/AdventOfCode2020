@@ -48,7 +48,7 @@ extension Year2016 {
             startingAt location: Point<Int>,
             heading: MapDirection
         ) -> (Point<Int>, MapDirection) {
-            var newHeading = heading + instruction.direction
+            let newHeading = heading + instruction.direction
             var newLocation = location
 
             switch newHeading {
