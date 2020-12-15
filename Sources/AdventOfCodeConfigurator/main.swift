@@ -79,7 +79,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
             //  \(year)Day\(day).swift
             //  AdventOfCode
             //
-            //  Created by \(ProcessInfo().fullUserName) on \(formattedDate).
+            //  Created by \(ProcessInfo.processInfo.fullUserName) on \(formattedDate).
             //
 
             import Foundation
@@ -122,7 +122,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
             //  \(year)Day\(day)Tests.swift
             //  AdventOfCodeTests
             //
-            //  Created by \(ProcessInfo().fullUserName) on \(formattedDate).
+            //  Created by \(ProcessInfo.processInfo.fullUserName) on \(formattedDate).
             //
 
             import AdventOfCode

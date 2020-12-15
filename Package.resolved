@@ -11,15 +11,6 @@
         }
       },
       {
-        "package": "CryptoSwift",
-        "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift.git",
-        "state": {
-          "branch": null,
-          "revision": "3a2acbb32ab68215ee1596ee6004da8e90c3721b",
-          "version": "1.0.0"
-        }
-      },
-      {
         "package": "Komondor",
         "repositoryURL": "https://github.com/shibapm/Komondor.git",
         "state": {
@@ -123,8 +114,8 @@
         "repositoryURL": "https://github.com/Realm/SwiftLint",
         "state": {
           "branch": null,
-          "revision": "d91c2179bb55111790e7053c039d5d7a600dfa3d",
-          "version": "0.41.0"
+          "revision": "d53fc2664df92ef322bfa9ce5238d34f1461526a",
+          "version": "0.42.0"
         }
       },
       {
