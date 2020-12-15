@@ -95,6 +95,16 @@ extension Sequence where Element: Equatable {
 
 }
 
+extension Collection where Index == Int {
+
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
+
+}
+
 extension Collection where Element: Collection {
 
     typealias Position = (outerIndex: Index, innerIndex: Element.Index)
