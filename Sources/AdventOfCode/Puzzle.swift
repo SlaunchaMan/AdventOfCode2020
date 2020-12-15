@@ -14,6 +14,7 @@ public protocol Year {
 
 public let allYears: [Year.Type] = [
     Year2015.self,
+    Year2016.self,
     Year2020.self
 ]
 
