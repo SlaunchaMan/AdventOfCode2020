@@ -95,6 +95,14 @@ extension Sequence where Element: Equatable {
 
 }
 
+extension Sequence where Element: Hashable {
+
+    func histogram() -> [Element: Int] {
+        reduce(into: [:]) { $0[$1, default: 0] += 1 }
+    }
+
+}
+
 extension Collection where Index == Int {
 
     func chunked(into size: Int) -> [[Element]] {

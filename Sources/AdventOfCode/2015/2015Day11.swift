@@ -7,10 +7,6 @@
 
 import Foundation
 
-extension String {
-    static let lowercaseAlphabet = "abcdefghijklmnopqrstuvwxyz"
-}
-
 extension Character {
 
     func nextLetter() -> Character? {
