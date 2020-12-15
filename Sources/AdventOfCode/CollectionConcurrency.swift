@@ -45,7 +45,7 @@ extension Sequence {
 
     func forEachConcurrent(
         onQueue queue: DispatchQueue = .global(),
-        maxConcurrentOperations: Int = ProcessInfo().activeProcessorCount,
+        maxConcurrentOperations: Int = ProcessInfo.processInfo.activeProcessorCount,
         _ body: @escaping (Element) -> Bool
     ) {
         let group = DispatchGroup()
@@ -64,7 +64,7 @@ extension Sequence {
     func forEachConcurrent(
         onQueue queue: DispatchQueue = .global(),
         timeout: DispatchTime,
-        maxConcurrentOperations: Int = ProcessInfo().activeProcessorCount,
+        maxConcurrentOperations: Int = ProcessInfo.processInfo.activeProcessorCount,
         _ body: @escaping (Element) -> Bool
     ) -> DispatchTimeoutResult {
         let group = DispatchGroup()
@@ -83,7 +83,7 @@ extension Sequence {
     func forEachConcurrent(
         onQueue queue: DispatchQueue = .global(),
         wallTimeout timeout: DispatchWallTime,
-        maxConcurrentOperations: Int = ProcessInfo().activeProcessorCount,
+        maxConcurrentOperations: Int = ProcessInfo.processInfo.activeProcessorCount,
         _ body: @escaping (Element) -> Bool
     ) -> DispatchTimeoutResult {
         let group = DispatchGroup()

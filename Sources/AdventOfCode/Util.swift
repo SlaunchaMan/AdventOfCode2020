@@ -8,7 +8,7 @@
 import Foundation
 
 private var isLoggingEnabled =
-    (ProcessInfo().environment["ENABLE_LOGGING"] != nil) ?
+    (ProcessInfo.processInfo.environment["ENABLE_LOGGING"] != nil) ?
     true : false
 
 private var isCapturingLogs = false
