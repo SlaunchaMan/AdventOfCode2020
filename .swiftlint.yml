@@ -7,3 +7,4 @@ nesting:
   type_level: 2
 excluded:
   - .build
+  - Tests/AdventOfCodeTests/XCTestManifests.swift
