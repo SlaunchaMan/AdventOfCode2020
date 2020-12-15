@@ -31,14 +31,7 @@ extension Year2015 {
                 if let data = "\(secretKey)\(candidate)".data(using: .utf8) {
                     let hash = Insecure.MD5.hash(data: data)
 
-                    let res = zeroes.quotientAndRemainder(dividingBy: 2)
-                    let size = res.quotient + res.remainder
-
-                    let prefixHash = hash.prefix(size)
-                        .map { String(format: "%02hhx", $0) }
-                        .joined()
-
-                    if prefixHash.hasPrefix(zeroString) {
+                    if hash.stringValue.hasPrefix(zeroString) {
                         let answer = answerQueue.sync { smallestAnswer }
 
                         if answer > candidate {
