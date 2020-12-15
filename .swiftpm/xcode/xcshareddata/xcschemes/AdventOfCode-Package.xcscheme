@@ -87,7 +87,7 @@
          <EnvironmentVariable
             key = "ENABLE_LOGGING"
             value = ""
-            isEnabled = "YES">
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
       <Testables>

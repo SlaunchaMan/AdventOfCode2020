@@ -56,7 +56,7 @@ extension Year2015 {
                 return try decoder.decode(Reindeer.self, from: input)
             }
             catch {
-                print(error)
+                log(error)
                 return nil
             }
         }
