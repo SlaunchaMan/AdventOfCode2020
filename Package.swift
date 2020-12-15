@@ -30,6 +30,10 @@ let package = Package(
             from: "0.3.0"
         ),
         .package(
+            url: "https://github.com/apple/swift-crypto",
+            from: "1.1.2"
+        ),
+        .package(
             url: "https://github.com/Realm/SwiftLint",
             from: "0.41.0"
         ),
@@ -68,6 +72,10 @@ let package = Package(
                 .product(
                     name: "Algorithms",
                     package: "swift-algorithms"
+                ),
+                .product(
+                    name: "Crypto",
+                    package: "swift-crypto"
                 ),
                 "StringDecoder"
             ],
