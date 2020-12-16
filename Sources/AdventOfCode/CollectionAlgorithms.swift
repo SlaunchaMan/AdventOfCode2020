@@ -101,6 +101,14 @@ extension Sequence where Element: Hashable {
         reduce(into: [:]) { $0[$1, default: 0] += 1 }
     }
 
+    func leastCommonElement() -> Element? {
+        histogram().min { $0.1 < $1.1 }.map { $0.0 }
+    }
+
+    func mostCommonElement() -> Element? {
+        histogram().max { $0.1 < $1.1 }.map { $0.0 }
+    }
+
 }
 
 extension Collection where Index == Int {
