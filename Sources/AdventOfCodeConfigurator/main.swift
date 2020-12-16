@@ -59,6 +59,10 @@ struct AdventOfCodeConfigurator: ParsableCommand {
             return formatter
         }()
 
+        var byline: String {
+            "Created by \(userName) on \(formattedDate)."
+        }
+
         var formattedDate: String {
             Self.fileDateFormatter.string(from: Date())
         }
@@ -79,7 +83,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
             //  \(year)Day\(day).swift
             //  AdventOfCode
             //
-            //  Created by \(ProcessInfo.processInfo.fullUserName) on \(formattedDate).
+            //  \(byline)
             //
 
             import Foundation
@@ -122,7 +126,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
             //  \(year)Day\(day)Tests.swift
             //  AdventOfCodeTests
             //
-            //  Created by \(ProcessInfo.processInfo.fullUserName) on \(formattedDate).
+            //  \(byline)
             //
 
             import AdventOfCode
@@ -140,6 +144,10 @@ struct AdventOfCodeConfigurator: ParsableCommand {
 
             }
             """
+        }
+
+        var userName: String {
+            ProcessInfo.processInfo.fullUserName
         }
 
         func yearIndexContents(days: [Int]) -> String {
