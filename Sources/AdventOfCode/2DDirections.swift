@@ -1,66 +1,11 @@
 //
-//  2DGeometry.swift
+//  2DDirections.swift
 //  AdventOfCode
 //
 //  Created by Jeff Kelley on 12/5/20.
 //
 
 import Foundation
-
-struct Point<Unit: AdditiveArithmetic> {
-
-    var x: Unit
-    var y: Unit
-
-    static var origin: Point {
-        Point(x: .zero, y: .zero)
-    }
-
-}
-
-extension Point: CustomStringConvertible {
-
-    var description: String {
-        "(\(x), \(y))"
-    }
-
-}
-
-extension Point: CustomDebugStringConvertible {
-
-    var debugDescription: String {
-        "\(String(describing: Unit.self)) point: \(description)"
-    }
-
-}
-
-extension Point: Hashable where Unit: Hashable {}
-extension Point: Equatable where Unit: Equatable {}
-
-extension Point where Unit: SignedNumeric {
-
-    mutating func rotate(clockwise: Bool) {
-        if clockwise {
-            let tmp = y
-            y = -x
-            x = tmp
-        }
-        else {
-            let tmp = x
-            x = -y
-            y = tmp
-        }
-    }
-
-}
-
-extension Point where Unit: SignedNumeric, Unit: Comparable {
-
-    func manhattanDistance(to point: Point) -> Unit {
-        abs(x - point.x) + abs(y - point.y)
-    }
-
-}
 
 enum MapDirection {
     case north

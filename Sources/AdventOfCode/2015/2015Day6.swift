@@ -16,9 +16,9 @@ extension Year2015 {
         public static let day = 6
 
         enum Instruction {
-            case turnOn(from: Point<Int>, to: Point<Int>)
-            case turnOff(from: Point<Int>, to: Point<Int>)
-            case toggle(from: Point<Int>, to: Point<Int>)
+            case turnOn(from: Point2D<Int>, to: Point2D<Int>)
+            case turnOff(from: Point2D<Int>, to: Point2D<Int>)
+            case toggle(from: Point2D<Int>, to: Point2D<Int>)
 
             init?(string: String) {
                 let scanner = Scanner(string: string)
@@ -36,8 +36,8 @@ extension Year2015 {
                       let endY = scanner.scanInt()
                 else { return nil }
 
-                let startPoint = Point(x: startX, y: startY)
-                let endPoint = Point(x: endX, y: endY)
+                let startPoint = Point2D(x: startX, y: startY)
+                let endPoint = Point2D(x: endX, y: endY)
 
                 switch prefix {
                 case "turn on ":
@@ -51,7 +51,7 @@ extension Year2015 {
                 }
             }
 
-            var startPoint: Point<Int> {
+            var startPoint: Point2D<Int> {
                 switch self {
                 case .turnOn(from: let point, to: _),
                      .turnOff(from: let point, to: _),
@@ -60,7 +60,7 @@ extension Year2015 {
                 }
             }
 
-            var endPoint: Point<Int> {
+            var endPoint: Point2D<Int> {
                 switch self {
                 case .turnOn(from: _, to: let point),
                      .turnOff(from: _, to: let point),

@@ -45,9 +45,9 @@ extension Year2016 {
 
         private static func processInstruction(
             _ instruction: Instruction,
-            startingAt location: Point<Int>,
+            startingAt location: Point2D<Int>,
             heading: MapDirection
-        ) -> (Point<Int>, MapDirection) {
+        ) -> (Point2D<Int>, MapDirection) {
             let newHeading = heading + instruction.direction
             var newLocation = location
 
@@ -63,9 +63,9 @@ extension Year2016 {
 
         private static func finalLocation(
             using instructions: [Instruction],
-            startingAt location: Point<Int> = .origin,
+            startingAt location: Point2D<Int> = .origin,
             heading: MapDirection = .north
-        ) -> Point<Int> {
+        ) -> Point2D<Int> {
             var location = location
             var heading = heading
 
@@ -98,12 +98,12 @@ extension Year2016 {
 
         private static func firstRevisitedLocation(
             using instructions: [Instruction],
-            startingAt location: Point<Int> = .origin,
+            startingAt location: Point2D<Int> = .origin,
             heading: MapDirection = .north
-        ) -> Point<Int>? {
+        ) -> Point2D<Int>? {
             var location = location
             var heading = heading
-            var locations: Set<Point<Int>> = [location]
+            var locations: Set<Point2D<Int>> = [location]
 
             for instrution in instructions {
                 // swiftlint:disable:next shorthand_operator

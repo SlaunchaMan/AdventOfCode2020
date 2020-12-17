@@ -25,89 +25,88 @@ extension Year2015 {
 
         public static let day = 18
 
-        private static func nextState(after state: [String]) -> [String] {
-            var nextState = state
+        private static func initialState(
+            from strings: [String]
+        ) -> Set<Point2D<Int>> {
+            var initialEnabledPoints = Set<Point2D<Int>>()
 
-            for (outerIndex, line) in state.indexed() {
-                for (innerIndex, _) in line.indexed() {
-                    let position = (outerIndex, innerIndex)
-                    let neighbors = state.neighbors(of: position)
-
-                    let livingNeighbors = neighbors.count { neighborPos in
-                        state[neighborPos] == "#"
-                    }
-
-                    switch (state[position], livingNeighbors) {
-                    case (_, 3), ("#", 2):
-                        nextState[position] = "#"
-
-                    default:
-                        nextState[position] = "."
-                    }
+            for (y, row) in strings.enumerated() {
+                for (x, value) in row.enumerated() where value == "#" {
+                    initialEnabledPoints.insert(Point2D(x: x, y: y))
                 }
             }
 
-            return nextState
-        }
-
-        private static func iterate(
-            lights: [String],
-            iterations: Int,
-            alwaysEnabledIndexes: [(Array<String>.Index, String.Index)] = []
-        ) -> [String] {
-            var state = lights
-
-            for position in alwaysEnabledIndexes {
-                state[position] = "#"
-            }
-
-            for _ in 0 ..< iterations {
-                var nextState = self.nextState(after: state)
-
-                for position in alwaysEnabledIndexes {
-                    nextState[position] = "#"
-                }
-
-                state = nextState
-            }
-
-            return state
+            return initialEnabledPoints
         }
 
         public static func example1() -> String {
-            let lights: [String] = parseInputLines(exampleInput)
-            let finalState = iterate(lights: lights, iterations: 5)
-            return String(finalState.joined(separator: "\n").count(of: "#"))
+            let lights = initialState(from: parseInputLines(exampleInput))
+            var game = BoundedGameOfLife(
+                initialState: lights,
+                bounds: PointBounds2D(
+                    validX: 0 ..< 6,
+                    validY: 0 ..< 6
+                )
+            )
+
+            for _ in 0 ..< 4 {
+                game = game.nextState()
+            }
+
+            return "\(game.state.count)"
         }
 
         public static func part1() -> String {
-            let lights: [String] = parseInputLines(puzzleInput())
-            let finalState = iterate(lights: lights, iterations: 100)
-            return String(finalState.joined(separator: "\n").count(of: "#"))
+            let lights = initialState(from: parseInputLines(puzzleInput()))
+            var game = BoundedGameOfLife(
+                initialState: lights,
+                bounds: PointBounds2D(
+                    validX: 0 ..< 100,
+                    validY: 0 ..< 100
+                )
+            )
+
+            for _ in 0 ..< 100 {
+                game = game.nextState()
+            }
+
+            return "\(game.state.count)"
         }
 
         public static func example2() -> String {
-            let lights: [String] = parseInputLines(exampleInput)
-
-            let finalState = iterate(
-                lights: lights,
-                iterations: 5,
-                alwaysEnabledIndexes: lights.cornerIndexes
+            let lights = initialState(from: parseInputLines(exampleInput))
+            var game = BoundedGameOfLife(
+                initialState: lights,
+                bounds: PointBounds2D(
+                    validX: 0 ..< 6,
+                    validY: 0 ..< 6
+                ),
+                alwaysEnabledPoints: [[0, 0], [0, 5], [5, 0], [5, 5]]
             )
 
-            return String(finalState.joined(separator: "\n").count(of: "#"))
+            for _ in 0 ..< 5 {
+                game = game.nextState()
+            }
+
+            return "\(game.state.count)"
         }
 
         public static func part2() -> String {
-            let lights: [String] = parseInputLines(puzzleInput())
-
-            let finalState = iterate(
-                lights: lights,
-                iterations: 100,
-                alwaysEnabledIndexes: lights.cornerIndexes
+            let lights = initialState(from: parseInputLines(puzzleInput()))
+            var game = BoundedGameOfLife(
+                initialState: lights,
+                bounds: PointBounds2D(
+                    validX: 0 ..< 100,
+                    validY: 0 ..< 100
+                ),
+                alwaysEnabledPoints: [[0, 0], [0, 99], [99, 0], [99, 99]]
             )
 
-            return String(finalState.joined(separator: "\n").count(of: "#"))
+            for _ in 0 ..< 100 {
+                game = game.nextState()
+            }
+
+            return "\(game.state.count)"
         }
 
     }

@@ -47,9 +47,9 @@ extension Year2020 {
 
         private static func nextLocationPart1(
             processing instruction: Instruction,
-            startingAt initialPosition: Point<Int>,
+            startingAt initialPosition: Point2D<Int>,
             heading: MapDirection
-        ) -> (Point<Int>, MapDirection) {
+        ) -> (Point2D<Int>, MapDirection) {
             var point = initialPosition
             var heading = heading
 
@@ -76,8 +76,8 @@ extension Year2020 {
 
         private static func finalLocationPart1(
             processing instructions: [Instruction]
-        ) -> Point<Int> {
-            var point: Point<Int> = .origin
+        ) -> Point2D<Int> {
+            var point: Point2D<Int> = .origin
             var heading: MapDirection = .east
 
             for instruction in instructions {
@@ -109,9 +109,9 @@ extension Year2020 {
 
         private static func nextLocationPart2(
             processing instruction: Instruction,
-            shipPosition: Point<Int>,
-            waypoint: Point<Int>
-        ) -> (Point<Int>, Point<Int>) {
+            shipPosition: Point2D<Int>,
+            waypoint: Point2D<Int>
+        ) -> (Point2D<Int>, Point2D<Int>) {
             var shipPosition = shipPosition
             var waypoint = waypoint
 
@@ -148,9 +148,9 @@ extension Year2020 {
 
         private static func finalLocationPart2(
             processing instructions: [Instruction]
-        ) -> Point<Int> {
-            var shipPoint: Point<Int> = .origin
-            var waypoint = Point(x: 10, y: 1)
+        ) -> Point2D<Int> {
+            var shipPoint: Point2D<Int> = .origin
+            var waypoint = Point2D(x: 10, y: 1)
 
             for instruction in instructions {
                 (shipPoint, waypoint) = nextLocationPart2(

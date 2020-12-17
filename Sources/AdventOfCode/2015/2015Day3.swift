@@ -15,7 +15,7 @@ extension Year2015 {
 
         public static let day = 3
 
-        typealias House = Point<Int>
+        typealias House = Point2D<Int>
 
         enum Instruction: String {
             case north = "^"
