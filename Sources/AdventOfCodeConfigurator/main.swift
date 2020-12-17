@@ -107,6 +107,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                 }
 
             }
+
             """
         }
 
@@ -143,6 +144,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                 }
 
             }
+
             """
         }
 
@@ -174,6 +176,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                 ]
 
             }
+
             """
         }
 
