@@ -89,8 +89,49 @@ extension Sequence where Element: AdditiveArithmetic {
 
 extension Sequence where Element: Equatable {
 
+    var abaPatterns: [[Element]] {
+        var result: [[Element]] = []
+        var iterator = makeIterator()
+
+        guard var a1 = iterator.next(),
+              var b = iterator.next()
+        else { return [] }
+
+        while let a2 = iterator.next() {
+            if a1 == a2 && a1 != b {
+                result.append([a1, b, a2])
+            }
+
+            a1 = b
+            b = a2
+        }
+
+        return result
+    }
+
     func count(of element: Element) -> Int {
         count(where: { $0 == element })
+    }
+
+    var hasABBAPattern: Bool {
+        var iterator = makeIterator()
+
+        guard var a1 = iterator.next(),
+              var b1 = iterator.next(),
+              var b2 = iterator.next()
+        else { return false }
+
+        while let a2 = iterator.next() {
+            if a1 == a2 && b1 == b2 && a1 != b1 {
+                return true
+            }
+
+            a1 = b1
+            b1 = b2
+            b2 = a2
+        }
+
+        return false
     }
 
 }
