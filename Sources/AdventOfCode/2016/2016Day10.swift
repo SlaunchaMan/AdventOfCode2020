@@ -50,6 +50,7 @@ extension Year2016 {
                 case highOutputID
             }
 
+            // swiftlint:disable:next function_body_length
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -127,6 +128,7 @@ extension Year2016 {
             // swiftlint:enable line_length
         )
 
+        // swiftlint:disable:next function_body_length
         private static func process(
             instructions: [Instruction]
         ) -> (botContents: [Int: [Int]], output: [Int: Int]) {
