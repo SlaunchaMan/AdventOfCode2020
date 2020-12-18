@@ -69,8 +69,8 @@
         "repositoryURL": "git@github.com:SlaunchaMan/StringDecoder.git",
         "state": {
           "branch": null,
-          "revision": "35f3880c1ecf90bba9beeeef4aaaed00e1f42da9",
-          "version": "0.0.2"
+          "revision": "92aaaecadebfbc435c90dd76d3d02ec15ad36be7",
+          "version": "0.0.4"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/apple/swift-crypto",
         "state": {
           "branch": null,
-          "revision": "9680b7251cd2be22caaed8f1468bd9e8915a62fb",
-          "version": "1.1.2"
+          "revision": "8f4bfa5bc1951440c15710e9e893721aa4b2765c",
+          "version": "1.1.3"
         }
       },
       {
