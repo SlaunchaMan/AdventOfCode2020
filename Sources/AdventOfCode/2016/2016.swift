@@ -22,7 +22,8 @@ public enum Year2016: Year {
         Year2016.Day8.self,
         Year2016.Day9.self,
         Year2016.Day10.self,
-        Year2016.Day11.self
+        Year2016.Day11.self,
+        Year2016.Day12.self
     ]
 
 }
