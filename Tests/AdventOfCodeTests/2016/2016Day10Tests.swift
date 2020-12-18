@@ -9,7 +9,7 @@ import AdventOfCode
 import XCTest
 
 class Year2016Day10Tests: XCTestCase {
-    
+
     func testExample1() {
         XCTAssertEqual(Year2016.Day10.example1(), "2")
     }
