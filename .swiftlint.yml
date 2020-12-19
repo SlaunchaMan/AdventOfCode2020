@@ -4,7 +4,7 @@ disabled_rules:
 line_length:
   error: 80
 nesting:
-  type_level: 2
+  type_level: 3
 excluded:
   - .build
   - Tests/AdventOfCodeTests/XCTestManifests.swift

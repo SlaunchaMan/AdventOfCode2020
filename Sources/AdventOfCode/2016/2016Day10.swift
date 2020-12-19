@@ -19,11 +19,11 @@ private let exampleInput =
     """
 
 extension KeyedDecodingContainer {
-    
+
     func contains(_ keys: [Key]) -> Bool {
         keys.allSatisfy(contains)
     }
-    
+
 }
 
 extension Year2016 {
@@ -33,14 +33,14 @@ extension Year2016 {
         public static let year: Year.Type = Year2016.self
 
         public static let day = 10
-        
+
         enum Instruction: Decodable {
             case value(value: Int, botID: Int)
             case botToBots(botID: Int, lowBotID: Int, highBotID: Int)
             case botToOutputAndBot(botID: Int, lowOutputID: Int, highBotID: Int)
             case botToBotAndOutput(botID: Int, lowBotID: Int, highOutputID: Int)
             case botToOutputs(botID: Int, lowOutputID: Int, highOutputID: Int)
-            
+
             enum CodingKeys: String, CodingKey {
                 case value
                 case botID = "id"
@@ -49,10 +49,11 @@ extension Year2016 {
                 case highBotID
                 case highOutputID
             }
-            
+
+            // swiftlint:disable:next function_body_length
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                
+
                 if container.contains(.value) {
                     self = .value(
                         value: try container.decode(Int.self, forKey: .value),
@@ -114,7 +115,7 @@ extension Year2016 {
                 }
             }
         }
-        
+
         private static var instructionDecoder = StringDecoder(
             // swiftlint:disable line_length
             formatStrings: [
@@ -126,53 +127,54 @@ extension Year2016 {
             ]
             // swiftlint:enable line_length
         )
-        
+
+        // swiftlint:disable:next function_body_length
         private static func process(
             instructions: [Instruction]
         ) -> (botContents: [Int: [Int]], output: [Int: Int]) {
             var instructions = instructions
-            
+
             var botContents: [Int: [Int]] = [:]
             var outputContents: [Int: Int] = [:]
-            
+
             func addValue(_ value: Int, toBot botID: Int) {
                 botContents[botID] =
                     botContents[botID, default: []] + [value]
             }
-            
+
             func addValue(_ value: Int, toOutput outputID: Int) {
                 outputContents[outputID] = value
             }
-            
+
             while !instructions.isEmpty {
                 var pendingInstructions: [Instruction] = []
-                
+
                 for instruction in instructions {
                     switch instruction {
                     case let .value(value: value, botID: botID):
                         addValue(value, toBot: botID)
-                        
+
                     case let .botToBots(botID: botID,
                                         lowBotID: lowID,
                                         highBotID: highID)
                             where botContents[botID]?.count == 2:
                         addValue(botContents[botID]!.min()!, toBot: lowID)
                         addValue(botContents[botID]!.max()!, toBot: highID)
-                        
+
                     case let .botToBotAndOutput(botID: botID,
                                                 lowBotID: lowID,
                                                 highOutputID: highID)
                             where botContents[botID]?.count == 2:
                         addValue(botContents[botID]!.min()!, toBot: lowID)
                         addValue(botContents[botID]!.max()!, toOutput: highID)
-                        
+
                     case let .botToOutputAndBot(botID: botID,
                                                 lowOutputID: lowID,
                                                 highBotID: highID)
                             where botContents[botID]?.count == 2:
                         addValue(botContents[botID]!.min()!, toOutput: lowID)
                         addValue(botContents[botID]!.max()!, toBot: highID)
-                        
+
                     case let .botToOutputs(botID: botID,
                                            lowOutputID: lowID,
                                            highOutputID: highID)
@@ -181,16 +183,16 @@ extension Year2016 {
                         addValue(botContents[botID]!.max()!, toOutput: highID)
 
                     default:
-                        pendingInstructions.append(instruction)                        
+                        pendingInstructions.append(instruction)
                     }
-                    
+
                     instructions = pendingInstructions
                 }
             }
-            
+
             return (botContents, outputContents)
         }
-        
+
         private static func bot(thatHandles chipA: Int,
                                 _ chipB: Int,
                                 using instructions: [Instruction]) -> Int {
@@ -201,10 +203,10 @@ extension Year2016 {
             }) {
                 return winner.key
             }
-            
+
             fatalError()
         }
-        
+
         private static func parseInstruction(_ line: String) -> Instruction? {
             do {
                 return try instructionDecoder.decode(Instruction.self,
@@ -215,22 +217,22 @@ extension Year2016 {
                 return nil
             }
         }
-        
+
         public static func example1() -> String {
             let instructions: [Instruction] = parseInputLines(
                 exampleInput,
                 using: parseInstruction
             )
-            
+
             return "\(bot(thatHandles: 5, 2, using: instructions))"
         }
-        
+
         public static func part1() -> String {
             let instructions: [Instruction] = parseInputLines(
                 puzzleInput(),
                 using: parseInstruction
             )
-            
+
             return "\(bot(thatHandles: 61, 17, using: instructions))"
         }
 
@@ -239,7 +241,7 @@ extension Year2016 {
                 puzzleInput(),
                 using: parseInstruction
             )
-            
+
             let (_, output) = process(instructions: instructions)
 
             return "\(output[0]! * output[1]! * output[2]!)"

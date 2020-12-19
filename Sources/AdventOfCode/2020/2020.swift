@@ -29,6 +29,7 @@ public enum Year2020: Year {
         Year2020.Day15.self,
         Year2020.Day16.self,
         Year2020.Day17.self,
+        Year2020.Day18.self,
         Year2020.Day19.self
     ]
 
