@@ -172,7 +172,9 @@ extension Year2020 {
 
         private static func patternString(atIndex index: Int,
                                           in rules: [Int: Rule]) -> String? {
-            let transform: (Int) -> String? = { patternString(atIndex: $0, in: rules) }
+            let transform: (Int) -> String? = {
+                patternString(atIndex: $0, in: rules)
+            }
 
             switch rules[index] {
             case .match(let string): return string
@@ -229,10 +231,15 @@ extension Year2020 {
         private static func regex(
             for rules: [Int: Rule]
         ) -> NSRegularExpression {
-            return try! NSRegularExpression(
-                pattern: "^\(patternString(atIndex: 0, in: rules)!)$",
-                options: []
-            )
+            do {
+                return try NSRegularExpression(
+                    pattern: "^\(patternString(atIndex: 0, in: rules)!)$",
+                    options: [])
+            }
+            catch {
+                log(error)
+                fatalError()
+            }
         }
 
         private static func numberOfMatches(strings: [String],

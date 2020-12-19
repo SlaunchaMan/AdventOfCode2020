@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Points
 
 protocol NDimensionPoint {
-    associatedtype Unit: Numeric
+    associatedtype Unit: AdditiveArithmetic
     init(x: Unit, y: Unit)
 }
 
@@ -77,6 +77,22 @@ extension Point2D: Neighbors where Unit: Hashable {
         )
     }
 
+}
+
+extension Point2D where Unit: FixedWidthInteger {
+
+    func directNeighbors() -> Set<Point2D> {
+        let minX = (x == .min) ? x : x - 1
+        let maxX = (x == .max) ? x : x + 1
+        let minY = (y == .min) ? y : y - 1
+        let maxY = (y == .max) ? y : y + 1
+
+        return Set(
+            (minX...maxX).map { x in Point2D(x: x, y: y) } +
+                (minY...maxY).map { y in Point2D(x: x, y: y) }
+        )
+        .filter { $0 != self }
+    }
 }
 
 extension Point2D where Unit: SignedNumeric {

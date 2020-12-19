@@ -77,9 +77,6 @@ extension Sequence {
         try map(transform).sum()
     }
 
-    // func allSatisfy(_ predicate: (Self.Element) throws -> Bool) rethrows -> Bool
-    // func map<T>(_ transform: (Self.Element) throws -> T) rethrows -> [T]
-
     func allMap<T>(
         into result: inout [T],
         _ transform: (Element) throws -> T?

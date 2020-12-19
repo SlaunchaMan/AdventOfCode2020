@@ -78,6 +78,15 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                 """
             }
 
+            let protocolName: String
+
+            switch (examples.contains(.one), examples.contains(.two)) {
+            case (true, true): protocolName = "FullPuzzle"
+            case (true, false): protocolName = "PuzzleWithExample1"
+            case (false, true): protocolName = "PuzzleWithExample2"
+            default: protocolName = "Puzzle"
+            }
+
             return """
             //
             //  \(year)Day\(day).swift
@@ -90,7 +99,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
 
             extension Year\(year) {
 
-                public enum Day\(day): Puzzle {
+                public enum Day\(day): \(protocolName) {
 
                     public static let year: Year.Type = Year\(year).self
 
