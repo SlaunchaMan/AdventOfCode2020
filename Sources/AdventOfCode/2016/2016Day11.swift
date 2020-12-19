@@ -80,23 +80,17 @@ extension Year2016 {
             case fourthFloor = 3
         }
 
-        class TestFacility: Hashable {
+        struct TestFacility: Hashable {
             let floorContents: [Set<Item>]
             let elevatorPosition: Int
 
-            let priorState: TestFacility?
-
-            init(floorContents: [Set<Item>],
-                 elevatorPosition: Int,
-                 priorState: TestFacility? = nil) {
+            init(floorContents: [Set<Item>], elevatorPosition: Int) {
                 self.floorContents = floorContents
                 self.elevatorPosition = elevatorPosition
-                self.priorState = priorState
             }
 
             init?(string: String) {
                 elevatorPosition = 0
-                priorState = nil
 
                 floorContents = Day11.parseInputLines(string).map { line in
                     line.components(separatedBy: " contains ")[1]
@@ -108,20 +102,15 @@ extension Year2016 {
                 }.map(Set.init)
             }
 
-            static func == (lhs: TestFacility, rhs: TestFacility) -> Bool {
-                lhs.floorContents == rhs.floorContents &&
-                    lhs.elevatorPosition == rhs.elevatorPosition
+            var equivalenceDiagram: String {
+                (0..<floorContents.count).map { normalizedContents(at: $0) }
+                    .joined() + "\(elevatorPosition)"
             }
 
             func floor(for item: Item) -> Int? {
                 floorContents.firstIndex {
-                    $0.contains(item.pair)
+                    $0.contains(item)
                 }
-            }
-
-            func hash(into hasher: inout Hasher) {
-                hasher.combine(floorContents)
-                hasher.combine(elevatorPosition)
             }
 
             var isSolved: Bool {
@@ -145,12 +134,12 @@ extension Year2016 {
                 }
             }
 
-            func diagram(includeHistory: Bool = false) -> String {
+            func diagram() -> String {
                 let allItems = floorContents
                     .reduce(into: Set()) { $0.formUnion($1) }
                     .sorted { $0.description < $1.description }
 
-                let d = floorContents.indexed().reversed().map { index, items in
+                return floorContents.indexed().reversed().map { index, items in
                     let floor = "F\(index + 1)"
                     let elevator = elevatorPosition == index ? "E" : "."
 
@@ -165,13 +154,28 @@ extension Year2016 {
 
                     return "\(floor) \(elevator)  \(itemAbbreviations)"
                 }.joined(separator: "\n")
+            }
 
-                if includeHistory, let prior = priorState {
-                    return "\(prior.diagram(includeHistory: true))\n\n\(d)"
+            func normalizedContents(at floor: Int) -> String {
+                let items = floorContents[floor]
+
+                return items.map { item -> String in
+                    if items.contains(item.pair) {
+                        return "PP"
+                    }
+                    else {
+                        switch item {
+                        case .microchip:
+                            let floor = self.floor(for: item.pair)
+                            return "\(floor!)M"
+                        case .generator:
+                            let floor = self.floor(for: item.pair)
+                            return "\(floor!)G"
+                        }
+                    }
                 }
-                else {
-                    return d
-                }
+                .sorted()
+                .joined(separator: ", ")
             }
 
             func possibleSteps() -> Set<TestFacility> {
@@ -216,11 +220,10 @@ extension Year2016 {
                         self.floorContents[self.elevatorPosition]
                         .subtracting(newItems)
 
-                    possibleSteps.insert(
-                        TestFacility(floorContents: floorContents,
-                                     elevatorPosition: floor,
-                                     priorState: self)
-                    )
+                    let facility = TestFacility(floorContents: floorContents,
+                                                elevatorPosition: floor)
+
+                    possibleSteps.insert(facility)
                 }
 
                 return possibleSteps.filter(\.isValid)
@@ -230,7 +233,7 @@ extension Year2016 {
         private static func minIterations(for facility: TestFacility) -> Int {
             var iterations = 0
             var possibilities: Set<TestFacility> = [facility]
-            var history: Set<TestFacility> = possibilities
+            var history: Set<String> = [facility.equivalenceDiagram]
 
             repeat {
                 iterations += 1
@@ -240,17 +243,15 @@ extension Year2016 {
 
                 possibilities.map {
                     $0.possibleSteps().filter {
-                        !history.contains($0)
+                        !history.contains($0.equivalenceDiagram)
                     }
                 }.forEach { next.formUnion($0) }
 
                 possibilities = next
-                history.formUnion(possibilities)
+                history.formUnion(possibilities.map(\.equivalenceDiagram))
             } while !possibilities.contains(where: \.isSolved)
 
-            log(possibilities
-                    .first(where: \.isSolved)!
-                    .diagram(includeHistory: true))
+            log(possibilities.first(where: \.isSolved)!.diagram())
 
             return iterations
         }
