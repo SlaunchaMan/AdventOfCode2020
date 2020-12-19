@@ -77,6 +77,29 @@ extension Sequence {
         try map(transform).sum()
     }
 
+    // func allSatisfy(_ predicate: (Self.Element) throws -> Bool) rethrows -> Bool
+    // func map<T>(_ transform: (Self.Element) throws -> T) rethrows -> [T]
+
+    func allMap<T>(
+        into result: inout [T],
+        _ transform: (Element) throws -> T?
+    ) rethrows -> Bool {
+        let results = try map(transform)
+
+        if results.allSatisfy({
+            switch $0 {
+            case .none: return false
+            case .some: return true
+            }
+        }) {
+            result = results.compactMap { $0 }
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
 }
 
 extension Sequence where Element: AdditiveArithmetic {
