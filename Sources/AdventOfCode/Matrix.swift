@@ -179,3 +179,9 @@ extension Matrix: Hashable where Element: Hashable {
     }
 
 }
+
+extension Matrix.Index: CustomStringConvertible {
+
+    var description: String { "(\(row), \(column))" }
+
+}
