@@ -19,7 +19,7 @@ extension Year2016 {
         private static func key(at index: Int,
                                 salt: String,
                                 stretchCount: Int = 0) -> Int {
-            var computedHashes = ConcurrentDictionary<Int, String>()
+            let computedHashes = ConcurrentDictionary<Int, String>()
 
             func hash(_ index: Int) -> String {
                 if let cached = computedHashes[index] { return cached }

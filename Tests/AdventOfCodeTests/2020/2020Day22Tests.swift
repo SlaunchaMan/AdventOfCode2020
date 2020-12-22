@@ -257,11 +257,7 @@ class Year2020Day22Tests: XCTestCase {
     }
 
     func testExample2() {
-        var score: String = ""
-
-        let output = captureLogOutput { score = Year2020.Day22.example2() }
-
-        XCTAssertEqual(score, "291")
+        XCTAssertEqual(Year2020.Day22.example2(), "291")
     }
 
     func testPart2() {
