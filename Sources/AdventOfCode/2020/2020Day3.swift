@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IsNotEmpty
 
 private let exampleInput =
     """
@@ -37,7 +38,7 @@ extension Year2020 {
             var collisions = 0
 
             for (row, line) in input.enumerated()
-            where (row % slope.1) == 0 && !line.isEmpty {
+            where (row % slope.1) == 0 && line.isNotEmpty {
                 let col = ((row * slope.0) / slope.1) % width
 
                 if line[line.index(line.startIndex, offsetBy: col)] == "#" {

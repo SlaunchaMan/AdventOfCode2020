@@ -8,6 +8,7 @@
 import AdventOfCode
 import ArgumentParser
 import Foundation
+import IsNotEmpty
 
 struct PuzzleSolver: ParsableCommand {
 
@@ -47,7 +48,7 @@ struct PuzzleSolver: ParsableCommand {
         if let year = year {
             return allYears.first { $0.year == year }
         }
-        else if !days.isEmpty {
+        else if days.isNotEmpty {
             return Year2020.self
         }
         else {
@@ -87,13 +88,13 @@ struct PuzzleSolver: ParsableCommand {
     }
 
     mutating func validate() throws {
-        if !days.isEmpty {
+        if days.isNotEmpty {
             let year = effectiveYear ?? Year2020.self
 
             let validDays = Set(year.allPuzzles.map { $0.day })
             let invalidDays = Set(days).subtracting(validDays).sorted()
 
-            if !invalidDays.isEmpty {
+            if invalidDays.isNotEmpty {
                 throw ParseError.invalidDays(year: year.year, days: invalidDays)
             }
         }

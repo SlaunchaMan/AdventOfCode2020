@@ -9,6 +9,7 @@
 
 import Algorithms
 import Foundation
+import IsNotEmpty
 
 private let exampleInput =
     """
@@ -437,7 +438,7 @@ extension Year2020 {
                 }
                 .lazy
                 .map { startIndexesOfSeaMonsters(in: $0) }
-                .filter { !$0.isEmpty }
+                .filter(\.isNotEmpty)
                 .first
                 .map(\.count) ?? 0
 

@@ -38,8 +38,12 @@ let package = Package(
             from: "0.41.0"
         ),
         .package(
+            url: "https://github.com/SlaunchaMan/IsNotEmpty",
+            from: "0.0.1"
+        ),
+        .package(
             url: "git@github.com:SlaunchaMan/StringDecoder.git",
-            from: "0.0.2"
+            from: "0.0.5"
         ),
         .package(
             url: "https://github.com/shibapm/Komondor.git",
@@ -53,7 +57,8 @@ let package = Package(
                 .product(
                     name: "ArgumentParser",
                     package: "swift-argument-parser"
-                )
+                ),
+                "IsNotEmpty"
             ]
         ),
         .target(
@@ -63,7 +68,8 @@ let package = Package(
                 .product(
                     name: "ArgumentParser",
                     package: "swift-argument-parser"
-                )
+                ),
+                "IsNotEmpty"
             ]
         ),
         .target(
@@ -77,6 +83,7 @@ let package = Package(
                     name: "Crypto",
                     package: "swift-crypto"
                 ),
+                "IsNotEmpty",
                 "StringDecoder"
             ],
             resources: [

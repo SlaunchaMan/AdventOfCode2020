@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IsNotEmpty
 
 private let exampleInput =
     """
@@ -32,7 +33,7 @@ extension Year2016 {
             init?(string: String) {
                 let components = string.components(
                     separatedBy: CharacterSet(charactersIn: "[]")
-                ).filter { !$0.isEmpty }
+                ).filter(\.isNotEmpty)
 
                 guard components.count == 2 else { return nil }
 

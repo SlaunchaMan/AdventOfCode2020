@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IsNotEmpty
 import StringDecoder
 
 private let exampleInput =
@@ -146,7 +147,7 @@ extension Year2016 {
                 outputContents[outputID] = value
             }
 
-            while !instructions.isEmpty {
+            while instructions.isNotEmpty {
                 var pendingInstructions: [Instruction] = []
 
                 for instruction in instructions {

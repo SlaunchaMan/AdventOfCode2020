@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IsNotEmpty
 
 private let exampleInput =
     """
@@ -72,7 +73,7 @@ extension Year2020 {
 
             let allTickets = parseInputLines(components[2],
                                              using: ticketValues(from:))
-                .filter { !$0.isEmpty }
+                .filter(\.isNotEmpty)
 
             return (fields, ticket, allTickets)
         }

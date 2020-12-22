@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IsNotEmpty
 
 private let exampleInput =
     """
@@ -65,7 +66,7 @@ extension Year2020 {
 
             var decodedAllergens: [String: String] = [:]
 
-            while !allAllergens.isEmpty {
+            while allAllergens.isNotEmpty {
                 for allergen in allAllergens {
                     var food = input.filter { $0.allergens.contains(allergen) }
                         .map { $0.ingredients }

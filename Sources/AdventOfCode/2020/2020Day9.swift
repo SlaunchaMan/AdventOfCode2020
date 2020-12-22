@@ -7,6 +7,7 @@
 
 import Algorithms
 import Foundation
+import IsNotEmpty
 
 private let exampleInput =
     """
@@ -55,7 +56,7 @@ extension Year2020 {
 
                 buffer.removeFirst()
                 buffer.append(next)
-            } while !remainder.isEmpty
+            } while remainder.isNotEmpty
 
             return nil
         }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IsNotEmpty
 
 private var isLoggingEnabled =
     (ProcessInfo.processInfo.environment["ENABLE_LOGGING"] != nil) ?
@@ -32,7 +33,7 @@ public func setLoggingEnabled(_ enabled: Bool = true) {
 
 func log(_ message: @autoclosure() -> Any) {
     if isCapturingLogs {
-        if !capturedLog!.isEmpty {
+        if capturedLog!.isNotEmpty {
             capturedLog?.append("\n")
         }
 

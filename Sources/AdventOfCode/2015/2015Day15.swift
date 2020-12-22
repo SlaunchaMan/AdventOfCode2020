@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IsNotEmpty
 import StringDecoder
 
 private let exampleInput =
@@ -35,7 +36,7 @@ extension Year2015 {
             of ingredients: [Ingredient],
             totalling total: Int
         ) -> [[Ingredient: Int]] {
-            precondition(!ingredients.isEmpty)
+            precondition(ingredients.isNotEmpty)
 
             if ingredients.count == 1 {
                 return [[ingredients[0]: total]]

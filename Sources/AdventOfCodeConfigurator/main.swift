@@ -7,6 +7,7 @@
 
 import ArgumentParser
 import Foundation
+import IsNotEmpty
 
 extension String {
 
@@ -227,7 +228,7 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                 var input: String = ""
 
                 while let line = readLine() {
-                    if !input.isEmpty {
+                    if input.isNotEmpty {
                         input.append("\n")
                     }
 

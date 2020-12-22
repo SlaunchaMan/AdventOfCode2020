@@ -7,6 +7,7 @@
 
 import Algorithms
 import Foundation
+import IsNotEmpty
 
 extension Year2015 {
 
@@ -336,7 +337,7 @@ extension Year2015 {
 
             var lowestScore: Int = .max
 
-            while !gameStates.isEmpty {
+            while gameStates.isNotEmpty {
                 var nextStates = product(gameStates, Spell.allCases).map {
                     playTurn(gameState: $0,
                              casting: $1,
