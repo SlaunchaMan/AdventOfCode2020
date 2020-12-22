@@ -22,6 +22,25 @@ extension Sequence where Element: Equatable {
         return false
     }
 
+    func firstElementRepeating(times: Int = 2) -> Element? {
+        var iterator = makeIterator()
+
+        var queue: [Element] = []
+
+        for _ in 0 ..< times - 1 {
+            guard let next = iterator.next() else { return nil }
+            queue.append(next)
+        }
+
+        while let next = iterator.next() {
+            queue.append(next)
+            if queue.allSatisfy({ $0 == queue[0] }) { return queue[0] }
+            queue.removeFirst()
+        }
+
+        return nil
+    }
+
 }
 
 extension StringProtocol {
