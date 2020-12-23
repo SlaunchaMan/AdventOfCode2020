@@ -191,6 +191,16 @@ extension Sequence where Element: Hashable {
 
 }
 
+extension Collection {
+
+    func wrappingIndex(after index: Index) -> Index {
+        let next = self.index(after: index)
+
+        return (next == endIndex ? startIndex : next)
+    }
+
+}
+
 extension RangeReplaceableCollection {
 
     mutating func removeAndReturn(
