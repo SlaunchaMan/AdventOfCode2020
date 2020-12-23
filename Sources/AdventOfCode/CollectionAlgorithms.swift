@@ -191,6 +191,28 @@ extension Sequence where Element: Hashable {
 
 }
 
+extension RangeReplaceableCollection {
+
+    mutating func removeAndReturn(
+        where predicate: (Element) throws -> Bool
+    ) rethrows -> [Element] {
+        var indexesToRemove: [Index] = []
+
+        for (index, element) in self.indexed() where try predicate(element) {
+            indexesToRemove.append(index)
+        }
+
+        var result: [Element] = []
+
+        for index in indexesToRemove.reversed() {
+            result.insert(remove(at: index), at: result.startIndex)
+        }
+
+        return result
+    }
+
+}
+
 extension Collection where Index == Int {
 
     func chunked(into size: Int) -> [[Element]] {
@@ -204,6 +226,14 @@ extension Collection where Index == Int {
 extension Collection where Element: Collection {
 
     typealias Position = (outerIndex: Index, innerIndex: Element.Index)
+
+}
+
+extension Collection where Self == SubSequence {
+
+    mutating func removeAndReturnFirst(_ n: Int) -> [Element] {
+        (0 ..< n).reduce(into: []) { result, _ in result.append(removeFirst()) }
+    }
 
 }
 

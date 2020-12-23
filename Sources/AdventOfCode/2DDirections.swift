@@ -14,7 +14,7 @@ enum MapDirection {
     case east
 }
 
-enum MovementDirection {
+enum MovementDirection: String, CaseIterable {
     case up
     case down
     case left
@@ -49,5 +49,14 @@ func + (_ lhs: MovementDirection, _ rhs: TurnDirection) -> MovementDirection {
     case (.left, .right): return .up
     case (.right, .left): return .up
     case (.right, .right): return .down
+    }
+}
+
+func + <T>(lhs: Point2D<T>, rhs: MovementDirection) -> Point2D<T> {
+    switch rhs {
+    case .up: return Point2D(x: lhs.x, y: lhs.y + 1)
+    case .down: return Point2D(x: lhs.x, y: lhs.y - 1)
+    case .left: return Point2D(x: lhs.x - 1, y: lhs.y)
+    case .right: return Point2D(x: lhs.x + 1, y: lhs.y)
     }
 }
