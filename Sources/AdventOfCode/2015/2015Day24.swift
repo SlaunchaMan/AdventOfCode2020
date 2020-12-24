@@ -47,7 +47,7 @@ extension Year2015 {
 
             guard let minimumEntanglement = combinations
                     .filter({ $0.sum() == targetWeight })
-                    .map({ $0.reduce(1, *) })
+                    .map({ $0.productOfElements() })
                     .min()
             else { return nil }
 

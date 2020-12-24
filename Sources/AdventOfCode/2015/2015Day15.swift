@@ -85,7 +85,7 @@ extension Year2015 {
 
             if scores.contains(where: { $0 < 0 }) { return 0 }
 
-            return scores.reduce(1, *)
+            return scores.productOfElements()
         }
 
         // swiftlint:disable:next line_length

@@ -10,18 +10,6 @@ import Foundation
 
 extension Sequence where Element: Equatable {
 
-    func containsAny<T: Sequence>(
-        in otherSequence: T
-    ) -> Bool where T.Element == Element {
-        for element in otherSequence {
-            if self.contains(element) {
-                return true
-            }
-        }
-
-        return false
-    }
-
     func firstElementRepeating(times: Int = 2) -> Element? {
         var iterator = makeIterator()
 
@@ -44,16 +32,6 @@ extension Sequence where Element: Equatable {
 }
 
 extension StringProtocol {
-
-    func containsAny<T: StringProtocol>(in strings: [T]) -> Bool {
-        for string in strings {
-            if self.contains(string) {
-                return true
-            }
-        }
-
-        return false
-    }
 
     func allRanges<T: StringProtocol>(
         of aString: T,
@@ -86,16 +64,6 @@ extension StringProtocol {
 
 extension Sequence {
 
-    func count(where predicate: (Element) throws -> Bool) rethrows -> Int {
-        try filter(predicate).count
-    }
-
-    func sum<T>(
-        _ transform: (Element) throws -> T
-    ) rethrows -> T where T: AdditiveArithmetic {
-        try map(transform).sum()
-    }
-
     func allMap<T>(
         into result: inout [T],
         _ transform: (Element) throws -> T?
@@ -114,14 +82,6 @@ extension Sequence {
         else {
             return false
         }
-    }
-
-}
-
-extension Sequence where Element: AdditiveArithmetic {
-
-    func sum() -> Element {
-        reduce(.zero, +)
     }
 
 }
@@ -148,10 +108,6 @@ extension Sequence where Element: Equatable {
         return result
     }
 
-    func count(of element: Element) -> Int {
-        count(where: { $0 == element })
-    }
-
     var hasABBAPattern: Bool {
         var iterator = makeIterator()
 
@@ -171,22 +127,6 @@ extension Sequence where Element: Equatable {
         }
 
         return false
-    }
-
-}
-
-extension Sequence where Element: Hashable {
-
-    func histogram() -> [Element: Int] {
-        reduce(into: [:]) { $0[$1, default: 0] += 1 }
-    }
-
-    func leastCommonElement() -> Element? {
-        histogram().min { $0.1 < $1.1 }.map { $0.0 }
-    }
-
-    func mostCommonElement() -> Element? {
-        histogram().max { $0.1 < $1.1 }.map { $0.0 }
     }
 
 }

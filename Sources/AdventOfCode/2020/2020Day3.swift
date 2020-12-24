@@ -68,7 +68,7 @@ extension Year2020 {
                 treeCollisions(using: input, slope: (1, 2))
             ]
 
-            return "\(collisions.reduce(1, *))"
+            return "\(collisions.productOfElements())"
         }
 
         public static func part2() -> String {
@@ -80,7 +80,7 @@ extension Year2020 {
                  treeCollisions(using: input, slope: (7, 1)),
                  treeCollisions(using: input, slope: (1, 2))]
 
-            return "\(collisions.reduce(1, *))"
+            return "\(collisions.productOfElements())"
         }
 
     }

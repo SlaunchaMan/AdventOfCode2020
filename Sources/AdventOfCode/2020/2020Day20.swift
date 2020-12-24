@@ -318,14 +318,14 @@ extension Year2020 {
             let tiles = exampleInput.components(separatedBy: "\n\n")
                 .compactMap(Tile.init)
 
-            return "\(cornerPieces(in: tiles).map(\.id).reduce(1, *))"
+            return "\(cornerPieces(in: tiles).map(\.id).productOfElements())"
         }
 
         public static func part1() -> String {
             let tiles = puzzleInput().components(separatedBy: "\n\n")
                 .compactMap(Tile.init)
 
-            return "\(cornerPieces(in: tiles).map(\.id).reduce(1, *))"
+            return "\(cornerPieces(in: tiles).map(\.id).productOfElements())"
         }
 
         // swiftlint:disable:next function_body_length

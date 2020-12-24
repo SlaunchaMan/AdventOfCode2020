@@ -51,7 +51,7 @@ extension Year2020 {
             guard let entries = countEntries(2, in: input, summingTo: 2020)
             else { fatalError() }
 
-            return "\(entries.reduce(1, *))"
+            return "\(entries.productOfElements())"
         }
 
         public static func part1() -> String {
@@ -60,7 +60,7 @@ extension Year2020 {
             guard let entries = countEntries(2, in: part1Input, summingTo: 2020)
             else { fatalError() }
 
-            return "\(entries.reduce(1, *))"
+            return "\(entries.productOfElements())"
         }
 
         public static func example2() -> String {
@@ -68,7 +68,7 @@ extension Year2020 {
             guard let entries = countEntries(3, in: input, summingTo: 2020)
             else { fatalError() }
 
-            return "\(entries.reduce(1, *))"
+            return "\(entries.productOfElements())"
         }
 
         public static func part2() -> String {
@@ -77,7 +77,7 @@ extension Year2020 {
             guard let entries = countEntries(3, in: part2Input, summingTo: 2020)
             else { fatalError() }
 
-            return "\(entries.reduce(1, *))"
+            return "\(entries.productOfElements())"
         }
 
     }

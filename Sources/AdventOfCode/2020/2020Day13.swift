@@ -87,7 +87,7 @@ extension Year2020 {
                 let stride = Swift.stride(
                     from: step,
                     through: .max,
-                    by: elements.map { $0.1 }.reduce(1, *)
+                    by: elements.map { $0.1 }.productOfElements()
                 )
 
                 elements.append((index, id))

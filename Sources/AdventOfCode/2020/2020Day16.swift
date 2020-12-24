@@ -168,7 +168,7 @@ extension Year2020 {
                 .filter { $0.key.hasPrefix("departure") }
                 .map { $0.value }
 
-            return "\(departureFields.reduce(1, *))"
+            return "\(departureFields.productOfElements())"
         }
 
     }
