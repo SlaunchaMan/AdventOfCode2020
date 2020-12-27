@@ -31,13 +31,14 @@
 
         public static let day = 22
 
+        typealias Point = Point2D<UInt8>
+
         struct Node: Decodable, Equatable, Hashable {
-            let x: UInt
-            let y: UInt
-            let size: UInt
-            var used: UInt
-            var available: UInt
-            var usePercent: UInt
+            let point: Point
+            let size: UInt16
+            var used: UInt16
+            var available: UInt16
+            var usePercent: UInt8
 
             enum CodingKeys: String, CodingKey {
                 case x
@@ -50,10 +51,6 @@
 
             var isTargetNode = false
 
-            var point: Point2D<UInt> {
-                Point2D(x: x, y: y)
-            }
-
             func canTransferData(toNode node: Node) -> Bool {
                 node.available >= used
             }
@@ -61,13 +58,17 @@
             init(from decoder: Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
 
-                x = try container.decode(UInt.self, forKey: .x)
-                y = try container.decode(UInt.self, forKey: .y)
-                size = try container.decode(UInt.self, forKey: .size)
-                used = try container.decode(UInt.self, forKey: .used)
-                available = try container.decode(UInt.self, forKey: .available)
+                let x = try container.decode(UInt8.self, forKey: .x)
+                let y = try container.decode(UInt8.self, forKey: .y)
+                point = Point(x: x, y: y)
 
-                usePercent = try container.decode(UInt.self,
+                size = try container.decode(UInt16.self, forKey: .size)
+                used = try container.decode(UInt16.self, forKey: .used)
+
+                available = try container.decode(UInt16.self,
+                                                 forKey: .available)
+
+                usePercent = try container.decode(UInt8.self,
                                                   forKey: .usePercent)
             }
         }
@@ -97,17 +98,17 @@
             return "\(viablePairs.count)"
         }
 
-        private static func node(at point: Point2D<UInt>,
+        private static func node(at point: Point,
                                  in nodes: [Node]) -> Node? {
             nodes.first { node in
                 node.point == point
             }
         }
 
-        private static func neighbors(of point: Point2D<UInt>,
+        private static func neighbors(of point: Point,
                                       in nodes: [Node],
-                                      maxX: UInt,
-                                      maxY: UInt) -> [Node] {
+                                      maxX: Point.Unit,
+                                      maxY: Point.Unit) -> [Node] {
             point.directNeighbors()
                 .filter { $0.x <= maxX }
                 .filter { $0.y <= maxY}
@@ -130,8 +131,8 @@
             destinationNode.available -= sourceNode.used
             destinationNode.isTargetNode = sourceNode.isTargetNode
             destinationNode.used += sourceNode.used
-            destinationNode.usePercent = (100 * destinationNode.used) /
-                destinationNode.size
+            destinationNode.usePercent = UInt8((100 * destinationNode.used) /
+                                                destinationNode.size)
 
             sourceNode.available = sourceNode.size
             sourceNode.isTargetNode = false
@@ -147,12 +148,12 @@
         private static func leastNumberOfMoves(nodes: [Node]) -> Int {
             var nodes = nodes
 
-            guard let maxX = nodes.map(\.x).max(),
-                  let maxY = nodes.map(\.y).max()
+            guard let maxX = nodes.map(\.point).map(\.x).max(),
+                  let maxY = nodes.map(\.point).map(\.y).max()
             else { preconditionFailure() }
 
             guard let targetNodeIndex = nodes.firstIndex(
-                where: { $0.point == Point2D(x: maxX, y: 0) }
+                where: { $0.point == Point(x: maxX, y: 0) }
             ) else { preconditionFailure() }
 
             nodes[targetNodeIndex].isTargetNode = true
@@ -172,10 +173,12 @@
                     guard let emptyNode = nodes.first(where: { $0.used == 0 })
                     else { continue }
 
-                    let nextChoices = neighbors(of: emptyNode.point,
-                                                in: nodes,
-                                                maxX: maxX,
-                                                maxY: maxY)
+                    let nextChoices: [Node] = self.neighbors(
+                        of: emptyNode.point,
+                        in: nodes,
+                        maxX: maxX,
+                        maxY: maxY
+                    )
 
                     nextChoices
                         .filter { $0.canTransferData(toNode: emptyNode) }
