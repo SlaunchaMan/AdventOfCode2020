@@ -9,7 +9,7 @@ import Foundation
 
 extension Year2015 {
 
-    public enum Day12: Puzzle {
+    public enum Day12: TwoPartPuzzle {
 
         public static let year: Year.Type = Year2015.self
 

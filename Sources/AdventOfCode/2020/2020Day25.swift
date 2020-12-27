@@ -66,10 +66,6 @@ extension Year2020 {
             return "\(encryptionKey(doorKey: door, cardKey: card))"
         }
 
-        public static func part2() -> String {
-            ""
-        }
-
     }
 
 }

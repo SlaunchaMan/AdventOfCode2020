@@ -18,8 +18,4 @@ class Year2020Day25Tests: XCTestCase {
         XCTAssertEqual(Year2020.Day25.part1(), "18293391")
     }
 
-    func testPart2() {
-        XCTAssertEqual(Year2020.Day25.part2(), "")
-    }
-
 }

@@ -10,7 +10,7 @@ import StringDecoder
 
 extension Year2015 {
 
-    public enum Day2: Puzzle {
+    public enum Day2: TwoPartPuzzle {
 
         public static let year: Year.Type = Year2015.self
 

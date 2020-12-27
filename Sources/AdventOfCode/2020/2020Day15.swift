@@ -11,7 +11,7 @@ private let exampleInput = "0,3,6"
 
 extension Year2020 {
 
-    public enum Day15: Puzzle {
+    public enum Day15: TwoPartPuzzle {
 
         public static let year: Year.Type = Year2020.self
 

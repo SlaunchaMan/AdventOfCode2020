@@ -81,10 +81,6 @@ extension Year2015 {
             "\(code(at: targetPoint, startingCode: 20151125))"
         }
 
-        public static func part2() -> String {
-            ""
-        }
-
     }
 
 }

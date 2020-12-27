@@ -131,7 +131,7 @@ struct PuzzleSolver: ParsableCommand {
             print(outputPrefix + "Part 1: \(part1Result)")
 
             if enableTiming {
-                print(outputPrefix + "Executed in \(part1Duration) seconds.")
+                print(outputPrefix + "Executed in \(part1Duration) seconds")
                 totalDuration += part1Duration
             }
 
@@ -139,18 +139,19 @@ struct PuzzleSolver: ParsableCommand {
                 print(outputPrefix + "Example 2: \(puzzle.example2())")
             }
 
-            var part2Duration: TimeInterval = 0
-            let part2Result = performWithTiming(duration: &part2Duration) {
-                puzzle.part2()
+            if let puzzle = puzzle as? TwoPartPuzzle.Type {
+                var part2Duration: TimeInterval = 0
+                let part2Result = performWithTiming(duration: &part2Duration) {
+                    puzzle.part2()
+                }
+
+                print(outputPrefix + "Part 2: \(part2Result)")
+
+                if enableTiming {
+                    print(outputPrefix + "Executed in \(part2Duration) seconds")
+                    totalDuration += part2Duration
+                }
             }
-
-            print(outputPrefix + "Part 2: \(part2Result)")
-
-            if enableTiming {
-                print(outputPrefix + "Executed in \(part2Duration) seconds.")
-                totalDuration += part2Duration
-            }
-
             nextPuzzle = iterator.next()
 
             if enableTiming || nextPuzzle != nil {
@@ -159,7 +160,7 @@ struct PuzzleSolver: ParsableCommand {
         }
 
         if enableTiming {
-            print("Total Duration: \(totalDuration) seconds.")
+            print("Total Duration: \(totalDuration) seconds")
         }
     }
 

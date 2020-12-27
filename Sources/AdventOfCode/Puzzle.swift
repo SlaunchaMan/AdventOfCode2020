@@ -22,6 +22,9 @@ public protocol Puzzle {
     static var year: Year.Type { get }
     static var day: Int { get }
     static func part1() -> String
+}
+
+public protocol TwoPartPuzzle: Puzzle {
     static func part2() -> String
 }
 
@@ -29,8 +32,9 @@ public protocol PuzzleWithExample1: Puzzle {
     static func example1() -> String
 }
 
-public protocol PuzzleWithExample2: Puzzle {
+public protocol PuzzleWithExample2: TwoPartPuzzle {
     static func example2() -> String
 }
 
+public typealias TwoPartPuzzleWithExample1 = TwoPartPuzzle & PuzzleWithExample1
 public typealias FullPuzzle = PuzzleWithExample1 & PuzzleWithExample2

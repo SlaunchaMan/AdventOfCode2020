@@ -79,16 +79,29 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                 """
             }
 
+            func part(_ n: Int) -> String {
+                """
+
+                        public static func part\(n)() -> String {
+                            ""
+                        }
+
+                """
+            }
+
             let protocolName: String
 
             switch (examples.contains(.one), examples.contains(.two)) {
+            case (false, false) where day == 25: protocolName = "Puzzle"
             case (true, true): protocolName = "FullPuzzle"
-            case (true, false): protocolName = "PuzzleWithExample1"
+            case (true, false) where day == 25:
+                protocolName = "PuzzleWithExample1"
+            case (true, false): protocolName = "TwoPartPuzzleWithExample1"
             case (false, true): protocolName = "PuzzleWithExample2"
-            default: protocolName = "Puzzle"
+            default: protocolName = "TwoPartPuzzle"
             }
 
-            return """
+            var file = """
             //
             //  \(year)Day\(day).swift
             //  AdventOfCode
@@ -105,20 +118,33 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                     public static let year: Year.Type = Year\(year).self
 
                     public static let day = \(day)
-            \(examples.contains(.one) ? example(1) : "")
-                    public static func part1() -> String {
-                        ""
-                    }
-            \(examples.contains(.two) ? example(2) : "")
-                    public static func part2() -> String {
-                        ""
+
+            """
+
+            if examples.contains(.one) {
+                file.append(example(1))
+            }
+
+            file.append(part(1))
+
+            if examples.contains(.two) {
+                file.append(example(2))
+            }
+
+            if examples.contains(.two) || day != 25 {
+                file.append(part(2))
+            }
+
+            file.append(
+                """
+
                     }
 
                 }
+                """
+            )
 
-            }
-
-            """
+            return file
         }
 
         var testFileContents: String {
@@ -132,7 +158,17 @@ struct AdventOfCodeConfigurator: ParsableCommand {
                 """
             }
 
-            return """
+            func testPart(_ n: Int) -> String {
+                """
+
+                    func testPart\(n)() {
+                        XCTAssertEqual(Year\(year).Day\(day).part\(n)(), "")
+                    }
+
+                """
+            }
+
+            var file = """
             //
             //  \(year)Day\(day)Tests.swift
             //  AdventOfCodeTests
@@ -144,18 +180,31 @@ struct AdventOfCodeConfigurator: ParsableCommand {
             import XCTest
 
             class Year\(year)Day\(day)Tests: XCTestCase {
-            \(examples.contains(.one) ? testExample(1) : "")
-                func testPart1() {
-                    XCTAssertEqual(Year\(year).Day\(day).part1(), "")
-                }
-            \(examples.contains(.two) ? testExample(2) : "")
-                func testPart2() {
-                    XCTAssertEqual(Year\(year).Day\(day).part2(), "")
-                }
-
-            }
 
             """
+
+            if examples.contains(.one) {
+                file.append(testExample(1))
+            }
+
+            file.append(testPart(1))
+
+            if examples.contains(.two) {
+                file.append(testExample(2))
+            }
+
+            if examples.contains(.two) || day != 25 {
+                file.append(testPart(2))
+            }
+
+            file.append("""
+
+                }
+
+                """
+            )
+
+            return file
         }
 
         var userName: String {

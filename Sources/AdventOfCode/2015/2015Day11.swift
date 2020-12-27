@@ -54,7 +54,7 @@ extension String {
 
 extension Year2015 {
 
-    public enum Day11: Puzzle {
+    public enum Day11: TwoPartPuzzle {
 
         public static let year: Year.Type = Year2015.self
 
