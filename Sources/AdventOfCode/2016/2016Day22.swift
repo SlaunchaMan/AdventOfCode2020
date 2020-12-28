@@ -145,7 +145,7 @@
             return state
         }
 
-        private static func leastNumberOfMoves(nodes: [Node]) -> Int {
+        private static func leastNumberOfMoves(nodes: [Node]) -> Int? {
             var nodes = nodes
 
             guard let maxX = nodes.map(\.point).map(\.x).max(),
@@ -158,51 +158,38 @@
 
             nodes[targetNodeIndex].isTargetNode = true
 
-            func destinationNode() -> Node? {
-                node(at: .origin, in: nodes)
+            let nextStates: ([Node]) -> [[Node]] = { nodes in
+                guard let emptyNode = nodes.first(where: { $0.used == 0 })
+                else { return [] }
+
+                return neighbors(of: emptyNode.point,
+                                 in: nodes,
+                                 maxX: maxX,
+                                 maxY: maxY)
+                    .filter { $0.canTransferData(toNode: emptyNode) }
+                    .map { state(nodes,
+                                 movingDataFromNode: $0,
+                                 toNode: emptyNode) }
             }
 
-            var currentState: Set<[Node]> = [nodes]
-            var history: Set<[Node]> = currentState
-            var iterations = 0
+            var search1 = BreadthFirstSearch(initialStates: [nodes],
+                                             nextStates: nextStates) {
+                node(at: Point(x: maxX, y: 0), in: $0)?.used == 0
+            }
 
-            repeat {
-                var nextState: Set<[Node]> = []
+            guard let possibleFirstSteps = search1.minimumIterations(),
+                  possibleFirstSteps.isNotEmpty
+            else { preconditionFailure() }
 
-                for nodes in currentState {
-                    guard let emptyNode = nodes.first(where: { $0.used == 0 })
-                    else { continue }
+            var search2 = BreadthFirstSearch(initialStates: possibleFirstSteps,
+                                             nextStates: nextStates) {
+                (node(at: .origin, in: $0)?.isTargetNode) ?? false
+            }
 
-                    let nextChoices: [Node] = self.neighbors(
-                        of: emptyNode.point,
-                        in: nodes,
-                        maxX: maxX,
-                        maxY: maxY
-                    )
+            guard let stepsPart2 = search2.minimumIterationCount()
+            else { return nil }
 
-                    nextChoices
-                        .filter { $0.canTransferData(toNode: emptyNode) }
-                        .map {
-                            state(nodes,
-                                  movingDataFromNode: $0,
-                                  toNode: emptyNode)
-                        }
-                        .filter { !history.contains($0) }
-                        .forEach {
-                            nextState.insert($0)
-                            history.insert($0)
-                        }
-                }
-
-                currentState = nextState
-                iterations += 1
-                // swiftlint:disable:next line_length
-                log("After \(iterations) iterations, currentState contains \(currentState.count) variations")
-            } while !currentState.contains(
-                where: { node(at: .origin, in: $0)!.isTargetNode }
-            )
-
-            return iterations
+            return stepsPart2 + search1.iterations
         }
 
         public static func example2() -> String {
@@ -218,7 +205,7 @@
                     }
                 }
 
-            return "\(leastNumberOfMoves(nodes: nodes))"
+            return "\(leastNumberOfMoves(nodes: nodes)!)"
         }
 
         public static func part2() -> String {
@@ -234,7 +221,7 @@
                     }
                 }
 
-            return "\(leastNumberOfMoves(nodes: nodes))"
+            return "\(leastNumberOfMoves(nodes: nodes)!)"
         }
 
     }

@@ -103,14 +103,31 @@ extension Year2016 {
             }
 
             var equivalenceDiagram: String {
-                (0..<floorContents.count).map { normalizedContents(at: $0) }
+                (0..<floorContents.count)
+                    .map { normalizedContents(at: $0) }
                     .joined() + "\(elevatorPosition)"
             }
 
-            func floor(for item: Item) -> Int? {
-                floorContents.firstIndex {
-                    $0.contains(item)
-                }
+            var diagram: String {
+                let allItems = floorContents
+                    .reduce(into: Set()) { $0.formUnion($1) }
+                    .sorted { $0.description < $1.description }
+
+                return floorContents.indexed().reversed().map { index, items in
+                    let floor = "F\(index + 1)"
+                    let elevator = elevatorPosition == index ? "E" : "."
+
+                    let itemAbbreviations = allItems.map { item in
+                        if items.contains(item) {
+                            return item.description
+                        }
+                        else {
+                            return ". "
+                        }
+                    }.joined(separator: " ")
+
+                    return "\(floor) \(elevator)  \(itemAbbreviations)"
+                }.joined(separator: "\n")
             }
 
             var isSolved: Bool {
@@ -134,51 +151,7 @@ extension Year2016 {
                 }
             }
 
-            func diagram() -> String {
-                let allItems = floorContents
-                    .reduce(into: Set()) { $0.formUnion($1) }
-                    .sorted { $0.description < $1.description }
-
-                return floorContents.indexed().reversed().map { index, items in
-                    let floor = "F\(index + 1)"
-                    let elevator = elevatorPosition == index ? "E" : "."
-
-                    let itemAbbreviations = allItems.map { item in
-                        if items.contains(item) {
-                            return item.description
-                        }
-                        else {
-                            return ". "
-                        }
-                    }.joined(separator: " ")
-
-                    return "\(floor) \(elevator)  \(itemAbbreviations)"
-                }.joined(separator: "\n")
-            }
-
-            func normalizedContents(at floor: Int) -> String {
-                let items = floorContents[floor]
-
-                return items.map { item -> String in
-                    if items.contains(item.pair) {
-                        return "PP"
-                    }
-                    else {
-                        switch item {
-                        case .microchip:
-                            let floor = self.floor(for: item.pair)
-                            return "\(floor!)M"
-                        case .generator:
-                            let floor = self.floor(for: item.pair)
-                            return "\(floor!)G"
-                        }
-                    }
-                }
-                .sorted()
-                .joined(separator: ", ")
-            }
-
-            func possibleSteps() -> Set<TestFacility> {
+            var possibleSteps: Set<TestFacility> {
                 let floorContents = self.floorContents[elevatorPosition]
 
                 let fullPair = Set(floorContents.map(\.element)).filter {
@@ -228,42 +201,56 @@ extension Year2016 {
 
                 return possibleSteps.filter(\.isValid)
             }
+
+            func floor(for item: Item) -> Int? {
+                floorContents.firstIndex {
+                    $0.contains(item)
+                }
+            }
+
+            func normalizedContents(at floor: Int) -> String {
+                let items = floorContents[floor]
+
+                return items.map { item -> String in
+                    if items.contains(item.pair) {
+                        return "PP"
+                    }
+                    else {
+                        switch item {
+                        case .microchip:
+                            let floor = self.floor(for: item.pair)
+                            return "\(floor!)M"
+                        case .generator:
+                            let floor = self.floor(for: item.pair)
+                            return "\(floor!)G"
+                        }
+                    }
+                }
+                .sorted()
+                .joined(separator: ", ")
+            }
+
         }
 
-        private static func minIterations(for facility: TestFacility) -> Int {
-            var iterations = 0
-            var possibilities: Set<TestFacility> = [facility]
-            var history: Set<String> = [facility.equivalenceDiagram]
+        private static func minIterations(for facility: TestFacility) -> Int? {
+            var search = BreadthFirstSearch(
+                initialStates: [facility],
+                nextStates: \.possibleSteps,
+                isFinalState: \.isSolved,
+                historyTransform: \.equivalenceDiagram
+            )
 
-            repeat {
-                iterations += 1
-                log("Iteration \(iterations)\n")
-
-                var next = Set<TestFacility>()
-
-                possibilities.map {
-                    $0.possibleSteps().filter {
-                        !history.contains($0.equivalenceDiagram)
-                    }
-                }.forEach { next.formUnion($0) }
-
-                possibilities = next
-                history.formUnion(possibilities.map(\.equivalenceDiagram))
-            } while !possibilities.contains(where: \.isSolved)
-
-            log(possibilities.first(where: \.isSolved)!.diagram())
-
-            return iterations
+            return search.minimumIterationCount()
         }
 
         public static func example1() -> String {
             let facility = TestFacility(string: exampleInput)!
-            return "\(minIterations(for: facility))"
+            return "\(minIterations(for: facility)!)"
         }
 
         public static func part1() -> String {
             let facility = TestFacility(string: puzzleInput())!
-            return "\(minIterations(for: facility))"
+            return "\(minIterations(for: facility)!)"
         }
 
         public static func part2() -> String {
@@ -280,7 +267,7 @@ extension Year2016 {
                 elevatorPosition: 0
             )
 
-            return "\(minIterations(for: withExtraItems))"
+            return "\(minIterations(for: withExtraItems)!)"
         }
 
     }
