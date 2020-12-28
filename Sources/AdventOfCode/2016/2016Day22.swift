@@ -78,6 +78,37 @@
             formatString: "\\/dev\\/grid\\/node\\-x$(x)\\-y$(y)( +)$(Size)T( +)$(Used)T( +)$(Avail)T( +)$(Use)\\%"
         )
 
+        private static func description(forFilesystem nodes: [Node]) -> String {
+            guard let maxX = nodes.map(\.point).map(\.x).max(),
+                  let maxY = nodes.map(\.point).map(\.y).max()
+            else { preconditionFailure() }
+
+            return (0 ... maxY).map { y in
+                (0 ... maxX)
+                    .compactMap { x in node(at: [x, y], in: nodes) }
+                    .map { node in
+                        if node.point == .origin, node.isTargetNode {
+                            return "(G)"
+                        }
+                        if node.point == .origin {
+                            return "(.)"
+                        }
+                        else if node.isTargetNode {
+                            return " G "
+                        }
+                        else if node.used == 0 {
+                            return " _ "
+                        }
+                        else if node.used > 100 {
+                            return " # "
+                        }
+                        else {
+                            return " . "
+                        }
+                }.joined()
+            }.joined(separator: "\n")
+        }
+
         public static func part1() -> String {
             let nodes = parseInputLines(puzzleInput())
                 .dropFirst(2)
@@ -175,21 +206,15 @@
             var search1 = BreadthFirstSearch(initialStates: [nodes],
                                              nextStates: nextStates) {
                 node(at: Point(x: maxX, y: 0), in: $0)?.used == 0
+            } historyTransform: {
+                description(forFilesystem: $0)
             }
 
-            guard let possibleFirstSteps = search1.minimumIterations(),
-                  possibleFirstSteps.isNotEmpty
+            guard let stepsToTopRight = search1.minimumIterationCount()
             else { preconditionFailure() }
 
-            var search2 = BreadthFirstSearch(initialStates: possibleFirstSteps,
-                                             nextStates: nextStates) {
-                (node(at: .origin, in: $0)?.isTargetNode) ?? false
-            }
-
-            guard let stepsPart2 = search2.minimumIterationCount()
-            else { return nil }
-
-            return stepsPart2 + search1.iterations
+            // Moving to the goal is a five-step process
+            return stepsToTopRight + (5 * (Int(maxX) - 1))
         }
 
         public static func example2() -> String {

@@ -87,13 +87,8 @@ extension BreadthFirstSearch: IteratorProtocol {
 
         for state in currentStates.flatMap(self.nextStates) {
             let historyEntry = historyTransform(state)
-            log("Checking history for \(HistoryEntry.self): \(historyEntry)")
 
-            if history.contains(historyEntry) {
-                log("Found in history, discarding")
-            }
-            else {
-                log("Not found, adding to next states")
+            if !history.contains(historyEntry) {
                 nextStates.insert(state)
                 history.insert(historyEntry)
             }

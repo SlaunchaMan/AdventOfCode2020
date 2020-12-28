@@ -19,7 +19,7 @@
     }
 
     func testPart2() {
-        XCTAssertEqual(Year2016.Day22.part2(), "")
+        XCTAssertEqual(Year2016.Day22.part2(), "252")
     }
 
  }
