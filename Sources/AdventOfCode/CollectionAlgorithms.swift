@@ -179,6 +179,32 @@ extension Collection where Element: Collection {
 
 }
 
+extension Collection where Element: Equatable {
+
+    func allEqual(_ element: Element) -> Bool {
+        allSatisfy { $0 == element }
+    }
+
+    func areAllEqual() -> Bool {
+        allSatisfy { $0 == first }
+    }
+
+}
+
+extension Collection where Element: Hashable {
+
+    func mostCommonElement() -> Element? {
+        let histogram = self.histogram()
+
+        guard let maxValue = histogram.values.max(),
+              let maxElement = first(where: { histogram[$0] == maxValue })
+        else { return nil }
+
+        return maxElement
+    }
+
+}
+
 extension Collection where Self == SubSequence {
 
     mutating func removeAndReturnFirst(_ n: Int) -> [Element] {
