@@ -358,12 +358,12 @@ extension AssembunnyComputer: IteratorProtocol, Sequence {
                     instructions[target].toggle()
 
                     // swiftlint:disable:next line_length
-                    print("Toggling instruction at index \(target): \(oldInstruction) -> \(instructions[target])")
+                    log("Toggling instruction at index \(target): \(oldInstruction) -> \(instructions[target])")
 
                     optimizedInstructions = Instruction.optimize(instructions)
                 }
                 else {
-                    print("\(target) is outside valid range, ignoring toggle")
+                    log("\(target) is outside valid range, ignoring toggle")
                 }
 
             case let .transmit(value: value):

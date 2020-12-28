@@ -107,7 +107,7 @@ extension Year2016 {
                      count: height)
         }
 
-        private static func print(grid: [[Bool]]) -> String {
+        private static func description(forGrid grid: [[Bool]]) -> String {
             grid.map { $0.map { $0 ? "#" : "." }.joined() }
                 .joined(separator: "\n")
         }
@@ -121,7 +121,7 @@ extension Year2016 {
             let finalGrid = self.finalGrid(applying: instructions,
                                            initialGrid: grid)
 
-            return print(grid: finalGrid)
+            return description(forGrid: finalGrid)
         }
 
         public static func part1() -> String {
@@ -147,7 +147,7 @@ extension Year2016 {
             let finalGrid = self.finalGrid(applying: instructions,
                                            initialGrid: grid)
 
-            return "\(print(grid: finalGrid))"
+            return "\(description(forGrid: finalGrid))"
         }
 
     }
