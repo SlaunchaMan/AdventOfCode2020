@@ -31,8 +31,8 @@ extension Year2017 {
         public static let day = 2
 
         private static func spreadsheetLine(_ input: String) -> [Int] {
-            input.split(separator: " ", omittingEmptySubsequences: true)
-                .map(String.init)
+            input.components(separatedBy: .whitespaces)
+                .filter(\.isNotEmpty)
                 .compactMap(Int.init)
         }
 
