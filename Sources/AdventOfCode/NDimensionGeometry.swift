@@ -30,6 +30,15 @@ struct Point2D<Unit: Numeric> {
         Point2D(x: .zero, y: .zero)
     }
 
+    static func + (lhs: Point2D, rhs: MovementDirection) -> Point2D {
+        switch rhs {
+        case .up: return Point2D(x: lhs.x, y: lhs.y + 1)
+        case .down: return Point2D(x: lhs.x, y: lhs.y - 1)
+        case .left: return Point2D(x: lhs.x - 1, y: lhs.y)
+        case .right: return Point2D(x: lhs.x + 1, y: lhs.y)
+        }
+    }
+
 }
 
 extension Point2D: NDimensionPoint {}

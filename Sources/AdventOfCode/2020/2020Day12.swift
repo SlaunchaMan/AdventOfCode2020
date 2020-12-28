@@ -61,8 +61,7 @@ extension Year2020 {
 
             case let (.turn(direction, degrees), _):
                 for _ in 0 ..< degrees / 90 {
-                    // swiftlint:disable:next shorthand_operator
-                    heading = heading + direction
+                    heading += direction
                 }
 
             case (.mapDirection(.north, let distance), _): point.y += distance

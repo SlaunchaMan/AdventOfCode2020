@@ -106,8 +106,7 @@ extension Year2016 {
             var locations: Set<Point2D<Int>> = [location]
 
             for instrution in instructions {
-                // swiftlint:disable:next shorthand_operator
-                heading = heading + instrution.direction
+                heading += instrution.direction
 
                 for _ in 0 ..< instrution.distance {
                     switch heading {
