@@ -19,7 +19,7 @@ class Year2016Day21Tests: XCTestCase {
     }
 
     func testPart2() {
-        XCTAssertEqual(Year2016.Day21.part2(), "gcehdbfa    ")
+        XCTAssertEqual(Year2016.Day21.part2(), "gcehdbfa")
     }
 
 }
