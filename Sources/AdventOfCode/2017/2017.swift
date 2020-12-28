@@ -12,7 +12,8 @@ public enum Year2017: Year {
     public static let year = 2017
 
     public static var allPuzzles: [Puzzle.Type] = [
-        Year2017.Day1.self
+        Year2017.Day1.self,
+        Year2017.Day2.self
     ]
 
 }
