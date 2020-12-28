@@ -263,6 +263,30 @@ extension BidirectionalCollection where Element: BidirectionalCollection {
         return nil
     }
 
+    func directNeighbors(of position: Position,
+                         wrapping: Bool = false,
+                         includesStart: Bool = false) -> [Position] {
+        let outerNeighbors = neighboringIndexes(of: position.outerIndex,
+                                                wrapping: wrapping)
+            .map { (outerIndex: $0, innerIndex: position.innerIndex) }
+
+        let innerNeighbors = self[position.outerIndex].neighboringIndexes(
+            of: position.innerIndex,
+            wrapping: wrapping
+        ).map { (outerIndex: position.outerIndex, innerIndex: $0) }
+
+        var neighbors: [Position] = []
+
+        if includesStart {
+            neighbors.append(position)
+        }
+
+        neighbors.append(contentsOf: outerNeighbors)
+        neighbors.append(contentsOf: innerNeighbors)
+
+        return neighbors
+    }
+
     func neighbors(of position: Position,
                    wrapping: Bool = false,
                    includesStart: Bool = false) -> [Position] {
