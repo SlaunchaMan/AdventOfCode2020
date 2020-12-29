@@ -21,10 +21,13 @@ extension Year2016 {
             var index = 0
             let zeroString = String(repeating: "0", count: 5)
 
+            var hash = Insecure.MD5.init()
+            hash.update(data: Data("\(doorID)".utf8))
+
             while decryptedPassword.count < 8 {
-                let hashString = Insecure.MD5
-                    .hash(data: Data("\(doorID)\(index)".utf8))
-                    .stringValue
+                var candidateHash = hash
+                candidateHash.update(data: Data("\(index)".utf8))
+                let hashString = candidateHash.finalize().stringValue
 
                 if hashString.hasPrefix(zeroString) {
                     let sixthIndex = hashString.index(hashString.startIndex,
@@ -54,10 +57,13 @@ extension Year2016 {
             var index = 0
             let zeroString = String(repeating: "0", count: 5)
 
+            var hash = Insecure.MD5.init()
+            hash.update(data: Data("\(doorID)".utf8))
+
             while decryptedPassword.contains("_") {
-                let hashString = Insecure.MD5
-                    .hash(data: Data("\(doorID)\(index)".utf8))
-                    .stringValue
+                var candidateHash = hash
+                candidateHash.update(data: Data("\(index)".utf8))
+                let hashString = candidateHash.finalize().stringValue
 
                 if hashString.hasPrefix(zeroString) {
                     let sixthIndex = hashString.index(hashString.startIndex,

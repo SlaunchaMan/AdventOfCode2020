@@ -41,7 +41,7 @@ extension Year2015 {
 
         public static func part1() -> String {
             guard let target = Int(puzzleInput()) else { fatalError() }
-            let house = (1...).leastConcurrent {
+            let house = (1...).concurrentFirst {
                 let presents = presentsPart1(atHouse: $0)
                 log("House \($0) got \(presents) presents.")
                 return presents >= target
@@ -51,7 +51,7 @@ extension Year2015 {
 
         public static func part2() -> String {
             guard let target = Int(puzzleInput()) else { fatalError() }
-            let house = (1...).leastConcurrent {
+            let house = (1...).concurrentFirst {
                 let presents = presentsPart2(atHouse: $0)
                 log("House \($0) got \(presents) presents.")
                 return presents >= target

@@ -22,32 +22,16 @@ extension Year2015 {
         ) -> Int {
             let zeroString = String(repeating: "0", count: zeroes)
 
-            let answerQueue = DispatchQueue(label: "answer",
-                                            attributes: [.concurrent])
+            var hash = Insecure.MD5.init()
+            hash.update(data: Data(secretKey.utf8))
 
-            var smallestAnswer: Int = .max
+            return (0...).concurrentFirst { candidate in
+                var candidateHash = hash
+                candidateHash.update(data: Data("\(candidate)".utf8))
 
-            (0...).forEachConcurrent { candidate in
-                if let data = "\(secretKey)\(candidate)".data(using: .utf8) {
-                    let hash = Insecure.MD5.hash(data: data)
-
-                    if hash.stringValue.hasPrefix(zeroString) {
-                        let answer = answerQueue.sync { smallestAnswer }
-
-                        if answer > candidate {
-                            answerQueue.async(flags: .barrier) {
-                                smallestAnswer = candidate
-                            }
-                        }
-
-                        return true
-                    }
-                }
-
-                return false
-            }
-
-            return answerQueue.sync { smallestAnswer }
+                return candidateHash.finalize().stringValue
+                    .hasPrefix(zeroString)
+            }!
         }
 
         public static func example1() -> String {
