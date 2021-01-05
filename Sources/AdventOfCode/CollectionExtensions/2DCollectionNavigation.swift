@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  2DCollectionNavigation.swift
+//  AdventOfCode
 //
 //  Created by Jeff Kelley on 12/13/20.
 //
